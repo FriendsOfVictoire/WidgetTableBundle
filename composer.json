@@ -1,0 +1,24 @@
+{
+    "name": "victoire/table-widget",
+    "type": "symfony-bundle",
+    "description": "Victoire DCMS Table widget",
+    "keywords": ["cms", "victoire", "Table", "widget"],
+    "homepage": "http://appventus.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Charlie LUCAS",
+            "email": "charlie@appventus.com"
+        }
+    ],
+    "require": {
+        "php"                      : ">=5.3.3",
+        "symfony/framework-bundle" : "~2.3",
+        "victoire/victoire"        : "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Victoire\\Widget\\TableBundle": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Victoire/Widget/TableBundle"
+}

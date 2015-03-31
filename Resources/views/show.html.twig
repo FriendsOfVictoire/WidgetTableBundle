@@ -1,0 +1,55 @@
+{% extends 'VictoireCoreBundle:Widget:show.html.twig' %}
+
+{% block content %}
+    <table class="table widget-table-show" {% if widget.fullWidth %}style="width:100%"{% endif %}>
+        <thead>
+            <tr>
+                <th {% if widget.option %}style="width:{{widget.option.percent}}"{% endif %}></th>
+            {% for column in widget.columnFields %}
+                <th class="widget-table-show-td" {% if column.option %}style="width:{{column.option.percent}}"{% endif %}>
+                    <div class="widget-table-show-column">
+                        {{column.val}}
+                    </div>
+                </th>
+            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in widget.rows %}
+                <tr>
+                    <td class="widget-table-show-td">
+                        <div class="pull-left widget-table-show-row">
+                            {{row.name}}
+                        </div>
+                    </td>
+                    {% for value in row.values %}
+                        <td class="widget-table-show-td">
+                            <div class="widget-table-show-value ">
+                                {{value.val|raw}}
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    <style type="text/css">
+    .widget-table-show{
+        width:inherit;
+    }
+    .widget-table-show-value {
+        text-align: center;
+    }
+    .widget-table-show-td{
+        border: 1px solid #dddddd;
+    }
+    .widget-table-show-column {
+        text-align: center;
+    }
+
+    </style>
+
+{# {{ parent() }} #}
+{# The parent display the content variable, you can do your custom display here #}
+{% endblock content %}

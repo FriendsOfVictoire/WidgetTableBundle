@@ -1,0 +1,11 @@
+victoire_core:
+    widgets:
+        Table:
+            class: "Victoire\\Widget\\TableBundle\\Entity\\WidgetTable"
+            name: Table
+            
+jms_translation:
+    configs:
+        victoire_table_bundle:
+            dirs: ["@VictoireTableBundle"]
+            output_dir: "@VictoireTableBundle/Resources/translations"

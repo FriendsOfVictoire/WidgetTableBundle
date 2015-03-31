@@ -1,0 +1,25 @@
+{
+    "require_all":
+    {
+        "javascripts":
+        {
+            "victoire-edit":
+            [
+                "bundles/victoireresources/vendor/redactor/redactor.js",
+                "bundles/victoireresources/vendor/redactor/plugins/fontcolor/fontcolor.js",
+                "bundles/victoireresources/vendor/redactor/plugins/fontfamily/fontfamily.js",
+                "bundles/victoireresources/vendor/redactor/plugins/fontsize/fontsize.js",
+                "bundles/victoireresources/vendor/x-editable/js/bootstrap-editable.js"
+            ]
+        },
+        "stylesheets":
+        {
+            "victoire-edit":
+            [
+                "bundles/victoireresources/vendor/redactor/redactor.less",
+                "bundles/victoireresources/vendor/x-editable/css/bootstrap-editable.css"
+            ]
+        }
+
+    }
+}

@@ -1,0 +1,47 @@
+services:
+    victoire_core.widget_table_content_resolver:
+        class: Victoire\Widget\TableBundle\Resolver\WidgetTableContentResolver
+        parent: victoire_widget.base_widget_content_resolver
+        arguments:
+            - "@form.factory"
+            - "@router"
+        tags:
+            - { name: victoire_widget.widget_content_resolver, alias: Table }
+
+    #alias to the entity
+    victoire.widget.table:
+        class: Victoire\Widget\TableBundle\Entity\WidgetTable
+
+    #alias to the form
+    victoire.widget.form.table:
+        class: Victoire\Widget\TableBundle\Form\WidgetTableType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_table }
+
+    # victoire.widget.form.axis:
+    #     class: Victoire\Widget\TableBundle\Form\AxisType
+    #     tags:
+    #         - { name: form.type , alias: victoire_widget_form_table_axis }
+
+    victoire.widget.form.table.row:
+        class: Victoire\Widget\TableBundle\Form\RowType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_table_row }
+
+    victoire.widget.form.table.value:
+        class: Victoire\Widget\TableBundle\Form\ValueType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_table_value }
+
+    victoire.widget.form.table.field:
+        class: Victoire\Widget\TableBundle\Form\FieldType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_table_field }
+    victoire.widget.form.table.option.value:
+        class: Victoire\Widget\TableBundle\Form\OptionValueType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_table_option_value }
+    victoire.widget.form.table.condition:
+        class: Victoire\Widget\TableBundle\Form\OptionConditionType
+        tags:
+            - { name: form.type , alias: victoire_widget_form_table_option_condition }
