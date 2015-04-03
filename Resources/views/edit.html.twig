@@ -210,6 +210,7 @@
             var percentForm = $vic(this).children('.table-option-percent-form');
             $vic(this).children('.table-option-percent-value').editable({
                 type: 'text',
+                emptytext: '{{"widget.table.width.empty"|trans}}',
                 placement: 'bottom',
                 success: function(response, newValue){
                     console.log($vic(this).siblings('table-option-percent-form').children('input'));
@@ -273,6 +274,7 @@
                 var percentForm = $vic(this).children('.table-option-percent-form');
                 $vic(this).children('.table-option-percent-value').editable({
                     type: 'text',
+                    emptytext: '{{"widget.table.width.empty"|trans}}',
                     placement: 'bottom',
                     success: function(response, newValue){
                         console.log($vic(this).siblings('table-option-percent-form').children('input'));
@@ -300,7 +302,18 @@
             });
             updateData('abscissa');
         });
-        // setTableEvent();
+        var numberColumn = $vic('#table-data').data('abscissa');
+        var numberRow =  $vic('#table-data').data('ordered');
+        if (numberColumn < 2) {
+            for (var i = numberColumn; i < 2; i++) {
+                $vic('#table-add-row-btn').click();
+            };
+        };
+        if (numberRow < 2) {
+            for (var i = numberRow; i < 2; i++) {
+                $vic('#table-add-column-btn').click();
+            };
+        };
     });
     function loadRedactor(elem, toolbarClass)
     {
