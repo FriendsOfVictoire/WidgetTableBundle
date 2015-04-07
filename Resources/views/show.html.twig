@@ -1,27 +1,45 @@
 {% extends 'VictoireCoreBundle:Widget:show.html.twig' %}
 
 {% block content %}
+    {% set displayColumnsFields = false %}
+    {% for column in widget.columnFields %}
+        {% if column.val %}
+            {% set displayColumnsFields = true %}
+        {% endif %}
+    {% endfor %}
+    {% set displayRowsFields = false %}
+    {% for row in widget.rows %}
+        {% if row.name %}
+            {% set displayRowsFields = true %}
+        {% endif %}
+    {% endfor %}
     <table class="table widget-table-show" {% if widget.fullWidth %}style="width:100%"{% endif %}>
+        {% if displayColumnsFields %}
         <thead>
             <tr>
-                <th {% if widget.option %}style="width:{{widget.option.percent}}"{% endif %}></th>
-            {% for column in widget.columnFields %}
-                <th class="widget-table-show-td" {% if column.option %}style="width:{{column.option.percent}}"{% endif %}>
-                    <div class="widget-table-show-column">
-                        {{column.val}}
-                    </div>
-                </th>
-            {% endfor %}
+                {% if displayRowsFields and displayColumnsFields%}
+                    <th {% if widget.option %}style="width:{{widget.option.percent}}"{% endif %}></th>
+                {% endif %}
+                {% for column in widget.columnFields %}
+                    <th class="widget-table-show-td" {% if column.option %}style="width:{{column.option.percent}}"{% endif %}>
+                        <div class="widget-table-show-column">
+                            {{column.val}}
+                        </div>
+                    </th>
+                {% endfor %}
             </tr>
         </thead>
+        {% endif %}
         <tbody>
             {% for row in widget.rows %}
                 <tr>
+                    {% if displayRowsFields %}
                     <th class="widget-table-show-td">
                         <div class="pull-left widget-table-show-row">
                             {{row.name}}
                         </div>
                     </th>
+                    {% endif %}
                     {% for value in row.values %}
                         <td class="widget-table-show-td">
                             <div class="widget-table-show-value ">
