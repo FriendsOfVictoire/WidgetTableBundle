@@ -23,6 +23,7 @@ class RowType extends AbstractType
         $builder
             ->add('name', null, array(
                     'label' => false,
+                    "required" => false
                 )
             )
             ->add('values', 'collection', array(
