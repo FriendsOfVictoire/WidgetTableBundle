@@ -16,6 +16,7 @@
         {
             "victoire-edit":
             [
+                "bundles/victoirewidgettable/less/table.less",
                 "bundles/victoireresources/vendor/redactor/redactor.less",
                 "bundles/victoireresources/vendor/x-editable/css/bootstrap-editable.css"
             ]
