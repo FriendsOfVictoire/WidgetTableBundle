@@ -198,10 +198,8 @@
 <script type="text/javascript">
     var buttons =
     [
-        'bold', 'italic', 'deleted','unorderedlist', 'orderedlist', 'link', 'alignment', 'fontcolor', 'backcolor', 'fontsize', 'fontfamily'    ];
-    // $vic(document).on('DOMSubtreeModified', function(){
-        // setTableEvent();
-    // });
+        'bold', 'italic', 'deleted','unorderedlist', 'orderedlist', 'link', 'alignment', 'fontcolor', 'backcolor', 'fontsize', 'fontfamily'
+    ];
     $vic(document).ready(function() {
         $vic('.vic-table-square-value').children().each(function(){
             loadRedactor(this, 'hidden');
@@ -213,7 +211,6 @@
                 emptytext: '{{"widget.table.width.empty"|trans}}',
                 placement: 'bottom',
                 success: function(response, newValue){
-                    console.log($vic(this).siblings('table-option-percent-form').children('input'));
                     $vic(this).siblings('.table-option-percent-form').children('input').val(newValue);
                 }
             });
@@ -277,7 +274,6 @@
                     emptytext: '{{"widget.table.width.empty"|trans}}',
                     placement: 'bottom',
                     success: function(response, newValue){
-                        console.log($vic(this).siblings('table-option-percent-form').children('input'));
                         $vic(this).siblings('.table-option-percent-form').children('input').val(newValue);
                     }
                 });
@@ -327,14 +323,10 @@
             $vic("#values-redactor-toolbar").append("<div id=\"values-redactor-toolbar-" + id + "\" class=\"" + toolbarClass + "\"></div>");
         }
         $vic("#" + id).redactor({
-            enterCallback: function(e)
-                {
-                    e.preventDefault();
-                },
             buttons : buttons,
-            maxHeight: 30,
+            maxHeight: 36,
+            minHeight: 36,
             focus: true,
-            enterKey: false,
             blurCallback : function(){
                 $vic('#values-redactor-toolbar-' + id).addClass('hidden');
             },
@@ -415,7 +407,6 @@
                     });
                 };
                 abscissaMax = (abscissaMax - 1);
-                console.log(abscissaMax);
                 data.data('abscissa', abscissaMax);
                 data.attr('data-abscissa', abscissaMax);
             break;
