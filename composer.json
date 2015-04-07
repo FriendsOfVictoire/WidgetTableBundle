@@ -1,5 +1,5 @@
 {
-    "name": "victoire/table-widget",
+    "name": "appventus/table-widget",
     "type": "symfony-bundle",
     "description": "Victoire DCMS Table widget",
     "keywords": ["cms", "victoire", "Table", "widget"],
