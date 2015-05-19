@@ -100,10 +100,13 @@ class WidgetTable extends Widget
      *
      * @return WidgetTable
      */
-    public function addColumnField(\Victoire\Widget\TableBundle\Entity\Field $columnField)
+    public function addColumnField($columnField)
     {
-        $this->columnFields[] = $columnField;
-        $columnField->setColumnField($this);
+        if($columnField !== null && $columnField instanceof \Victoire\Widget\TableBundle\Entity\Field)
+        {
+            $this->columnFields[] = $columnField;
+            $columnField->setColumnField($this);
+        }
 
 
         return $this;
