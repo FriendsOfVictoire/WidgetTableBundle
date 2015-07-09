@@ -22,3 +22,7 @@ Do not forget to add the bundle in your AppKernel !
             return $bundles;
         }
     }
+
+Think to enable VictoireResourcesBundle which brings the redactor library :
+
+    new Victoire\Bundle\ResourcesBundle\VictoireResourcesBundle(),
