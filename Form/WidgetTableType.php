@@ -70,7 +70,7 @@ class WidgetTableType extends WidgetType
             'widget'             => 'Table',
             'translation_domain' => 'victoire',
             'namespace'          => null,
-            'entityName'         => null,
+            'businessEntityId'   => null,
             'mode'               => "static"
         ));
     }
