@@ -13,45 +13,48 @@
             {% set displayRowsFields = true %}
         {% endif %}
     {% endfor %}
-    <table class="table widget-table-show" {% if widget.fullWidth %}style="width:100%"{% endif %}>
-        {% if displayColumnsFields %}
-        <thead>
-            <tr>
-                {% if displayRowsFields and displayColumnsFields%}
-                    <th {% if widget.option %}style="width:{{widget.option.percent}}"{% endif %}></th>
-                {% endif %}
-                {% for column in widget.columnFields %}
-                    <th class="widget-table-show-td" {% if column.option %}style="width:{{column.option.percent}}"{% endif %}>
-                        <div class="widget-table-show-column">
-                            {{column.val}}
-                        </div>
-                    </th>
-                {% endfor %}
-            </tr>
-        </thead>
-        {% endif %}
-        <tbody>
-            {% for row in widget.rows %}
+    <div class="table-responsive">
+        <table class="table widget-table-show" {% if widget.fullWidth %}style="width:100%"{% endif %}>
+            {% if displayColumnsFields %}
+            <thead>
                 <tr>
-                    {% if displayRowsFields %}
-                    <th class="widget-table-show-td">
-                        <div class="pull-left widget-table-show-row">
-                            {{row.name}}
-                        </div>
-                    </th>
+                    {% if displayRowsFields and displayColumnsFields%}
+                        <th {% if widget.option %}style="width:{{widget.option.percent}}"{% endif %}></th>
                     {% endif %}
-                    {% for value in row.values %}
-                        <td class="widget-table-show-td">
-                            <div class="widget-table-show-value ">
-                                {{value.val|raw}}
+                    {% for column in widget.columnFields %}
+                        <th class="widget-table-show-td" {% if column.option %}style="width:{{column.option.percent}}"{% endif %}>
+                            <div class="widget-table-show-column">
+                                {{column.val}}
                             </div>
-                        </td>
+                        </th>
                     {% endfor %}
                 </tr>
-            {% endfor %}
-        </tbody>
+            </thead>
+            {% endif %}
+            <tbody>
+                {% for row in widget.rows %}
+                    <tr>
+                        {% if displayRowsFields %}
+                        <th class="widget-table-show-td">
+                            <div class="pull-left widget-table-show-row">
+                                {{row.name}}
+                            </div>
+                        </th>
+                        {% endif %}
+                        {% for value in row.values %}
+                            <td class="widget-table-show-td">
+                                <div class="widget-table-show-value ">
+                                    {{value.val|raw}}
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
 
-    </table>
+        </table>
+    </div>
+
     <style type="text/css">
     .widget-table-show{
         width:inherit;
