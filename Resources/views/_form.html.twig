@@ -15,9 +15,15 @@
                     {% for fieldColumn in form.columnFields %}
                     <li class="vic-table-square -action" data-abscissa="{{ loop.index0 }}">
                         {% spaceless %}
-                        <button class="table-btn -remove table-delete-column" data-abscissa="{{ loop.index0 }}">
-                            <i class="fa fa-minus-square-o"></i>
-                        </button>
+                            <div class="table-btn -remove table-move-left-column" data-abscissa="{{ loop.index0 }}">
+                                <i class="fa fa-arrow-left"></i>
+                            </div>
+                            <button class="table-btn -remove table-delete-column" data-abscissa="{{ loop.index0 }}">
+                                <i class="fa fa-minus-square-o"></i>
+                            </button>
+                            <div class="table-btn -remove table-move-right-column" data-abscissa="{{ loop.index0 }}">
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
                         {% endspaceless %}
                     </li>
                     {% endfor %}
@@ -56,6 +62,12 @@
                         <button class="table-btn -remove table-delete-row" data-ordered="{{ loop.index0 }}">
                             <i class="fa fa-minus-square-o"></i>
                         </button>
+                        <div class="table-btn -remove table-move-up-row" data-abscissa="{{ loop.index0 }}">
+                            <i class="fa fa-arrow-up"></i>
+                        </div>
+                        <div class="table-btn -remove table-move-down-row" data-abscissa="{{ loop.index0 }}">
+                            <i class="fa fa-arrow-down"></i>
+                        </div>
                         {% endspaceless %}
                     </li>
 
@@ -107,9 +119,15 @@
 <div class="hidden" id="prototype-delete-row">
     <li class="vic-table-square -action" data-ordered="__ORDERED__">
         {% spaceless %}
-        <button class="table-btn -remove table-delete-row" data-ordered="__ORDERED__">
-            <i class="fa fa-minus-square-o"></i>
-        </button>
+            <button class="table-btn -remove table-delete-row" data-ordered="__ORDERED__">
+                <i class="fa fa-minus-square-o"></i>
+            </button>
+            <div class="table-btn -remove table-move-up-row" data-abscissa="__ORDERED__">
+                <i class="fa fa-arrow-up"></i>
+            </div>
+            <div class="table-btn -remove table-move-down-row" data-abscissa="__ORDERED__">
+                <i class="fa fa-arrow-down"></i>
+            </div>
         {% endspaceless %}
     </li>
 </div>
@@ -125,9 +143,15 @@
 <div class="hidden" id="prototype-delete-column">
     <li class="vic-table-square -action" data-abscissa="__ABSCISSA__">
         {% spaceless %}
-        <button class="table-btn -remove table-delete-column" data-abscissa="__ABSCISSA__">
-            <i class="fa fa-minus-square-o"></i>
-        </button>
+            <div class="table-btn -remove table-move-left-column" data-abscissa="__ABSCISSA__">
+                <i class="fa fa-arrow-left"></i>
+            </div>
+            <button class="table-btn -remove table-delete-column" data-abscissa="__ABSCISSA__">
+                <i class="fa fa-minus-square-o"></i>
+            </button>
+            <div class="table-btn -remove table-move-right-column" data-abscissa="__ABSCISSA__">
+                <i class="fa fa-arrow-right"></i>
+            </div>
         {% endspaceless %}
     </li>
 </div>
@@ -250,6 +274,11 @@
             newRowContainer.append(newPlaceholderRow);
             $vic(newRow).insertBefore($vic('#vic-table-row-placeholder').parent('li'));
 
+            $vic('.vic-table-square-value[data-ordered="' + $vic('#table-data').data('ordered') + '"]').children().each(function(i){
+                loadRedactor(this, "hidden");
+                console.log(this);
+            });
+
             $vic(newRow).find('.table-delete-row').on('click', function(){
                 var ordered = $vic(this).data('ordered');
                 $vic('*[data-ordered="' + ordered + '"]:not(#table-data)').remove();
@@ -291,6 +320,11 @@
             newFieldColumn.insertBefore($vic('#table-row-field-placeholder'));
             var newDeleteColumn = $vic(setCoordinate($vic('#prototype-delete-column').html()));
             newDeleteColumn.insertBefore($vic('#table-add-column'));
+
+            $vic('.vic-table-square-value[data-abscissa="' + $vic('#table-data').data('abscissa') + '"]').children().each(function(i){
+                loadRedactor(this, "hidden");
+                console.log(this);
+            });
 
             newDeleteColumn.find('.table-delete-column').on('click', function(){
                 var abscissa = $vic(this).data('abscissa');
@@ -425,4 +459,77 @@
             });
         });
     }
+    $vic(document).on('click','.table-move-right-column', function(event){
+        var column = $vic(this).parents('.vic-table-square')[0];
+        var abscissa = $vic(column).data('abscissa');
+
+        if(abscissa < $vic('#table-data').data('abscissa')){
+            $vic('.vic-table-square-value[data-abscissa="' + abscissa+ '"]').each(function(i){
+                var nextElem = $vic('.vic-table-square-value[data-abscissa="' + (abscissa + 1) + '"][data-ordered="' + i + '"]');
+                var nextElemValue = nextElem.find('textarea').redactor('code.get');
+                nextElem.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
+                $vic(this).find('textarea').redactor('code.set', nextElemValue );
+            });
+            var nextField = $vic('.vic-table-square.-field[data-abscissa="' + (abscissa + 1) + '"]').find('textarea');
+            var currentField = $vic('.vic-table-square.-field[data-abscissa="' + abscissa + '"]').find('textarea');
+            var nextFieldValue = nextField.val();
+            nextField.val(currentField.val());
+            currentField.val(nextFieldValue);
+        }
+    })
+    $vic(document).on('click','.table-move-left-column', function(){
+        var column = $vic(this).parents('.vic-table-square')[0];
+        var abscissa = $vic(column).data('abscissa');
+
+        if(abscissa > 0){
+            $vic('.vic-table-square-value[data-abscissa="' + abscissa+ '"]').each(function(i){
+                var previousElem = $vic('.vic-table-square-value[data-abscissa="' + (abscissa - 1) + '"][data-ordered="' + i + '"]');
+                var previousElemValue = previousElem.find('textarea').redactor('code.get');
+                previousElem.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
+                $vic(this).find('textarea').redactor('code.set', previousElemValue );
+            });
+            var previousField = $vic('.vic-table-square.-field[data-abscissa="' + (abscissa - 1) + '"]').find('textarea');
+            var currentField = $vic('.vic-table-square.-field[data-abscissa="' + abscissa + '"]').find('textarea');
+            var previousFieldValue = previousField.val();
+            previousField.val(currentField.val());
+            currentField.val(previousFieldValue);
+        }
+    })
+    $vic(document).on('click','.table-move-up-row', function(){
+        var row = $vic(this).parents('.vic-table-square')[0];
+        var ordered = $vic(row).data('ordered');
+
+
+        if(ordered > 0){
+            $vic('.vic-table-square-value[data-ordered="' + ordered+ '"]').each(function(i){
+                var nextElem = $vic('.vic-table-square-value[data-ordered="' + (ordered - 1) + '"][data-abscissa="' + i + '"]');
+                var nextElemValue = nextElem.find('textarea').redactor('code.get');
+                nextElem.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
+                $vic(this).find('textarea').redactor('code.set', nextElemValue );
+            });
+            var nextField = $vic('.vic-table-square.-field[data-ordered="' + (0) + '"]').find('input');
+            var currentField = $vic('.vic-table-square.-field[data-ordered="' + 1 + '"]').find('input');
+            var nextFieldValue = nextField.val();
+            nextField.val(currentField.val());
+            currentField.val(nextFieldValue);
+        }
+    })
+    $vic(document).on('click','.table-move-down-row', function(){
+        var row = $vic(this).parents('.vic-table-square')[0];
+        var ordered = $vic(row).data('ordered');
+
+        if(ordered < $vic('#table-data').data('ordered')){
+            $vic('.vic-table-square-value[data-ordered="' + ordered + '"]').each(function(i){
+                var previousElem = $vic('.vic-table-square-value[data-ordered="' + (ordered + 1) + '"][data-abscissa="' + i + '"]');
+                var previousElemValue = previousElem.find('textarea').redactor('code.get');
+                previousElem.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
+                $vic(this).find('textarea').redactor('code.set', previousElemValue );
+            });
+            var previousField = $vic('.vic-table-square.-field[data-ordered="' + (ordered + 1) + '"]').find('input');
+            var currentField = $vic('.vic-table-square.-field[data-ordered="' + ordered + '"]').find('input');
+            var previousFieldValue = previousField.val();
+            previousField.val(currentField.val());
+            currentField.val(previousFieldValue);
+        }
+    })
 </script>
