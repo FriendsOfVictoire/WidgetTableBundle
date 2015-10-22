@@ -10,35 +10,34 @@ class OptionConditionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('conditionOperator', "choice", array(
-                    "choices" => array(
-                        "equalTo" => "==",
-                        "lessThan" => "<",
-                        "moreThan" => ">",
-                        "lessOrEqualTo" => "<=",
-                        "moreOrEqualTo" => "=>",
-                        "differentTo" => "!="
-                        )
-                )
+            ->add('conditionOperator', 'choice', [
+                    'choices' => [
+                        'equalTo'       => '==',
+                        'lessThan'      => '<',
+                        'moreThan'      => '>',
+                        'lessOrEqualTo' => '<=',
+                        'moreOrEqualTo' => '=>',
+                        'differentTo'   => '!=',
+                        ],
+                ]
             )
-            ->add('conditionExpression', null, array(
-                    "required" => true
-                )
+            ->add('conditionExpression', null, [
+                    'required' => true,
+                ]
             )
-            ->add('valid', null, array(
-                    "required" => true
-                )
+            ->add('valid', null, [
+                    'required' => true,
+                ]
             )
-            ->add('notValid', null, array(
-                    "required" => false
-                )
-            )
-        ;
+            ->add('notValid', null, [
+                    'required' => false,
+                ]
+            );
     }
 
     /**
@@ -46,9 +45,9 @@ class OptionConditionType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Victoire\Widget\TableBundle\Entity\OptionCondition'
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'Victoire\Widget\TableBundle\Entity\OptionCondition',
+        ]);
     }
 
     /**

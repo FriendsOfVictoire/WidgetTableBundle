@@ -1,28 +1,26 @@
 <?php
+
 namespace Victoire\Widget\TableBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * WidgetTable
+ * WidgetTable.
  *
  * @ORM\Table("vic_widget_table")
  * @ORM\Entity
  */
 class WidgetTable extends Widget
 {
-
     /**
      * @ORM\OneToMany(targetEntity="Row", mappedBy="widgetTable", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-
     private $rows;
 
     /**
      * @ORM\OneToMany(targetEntity="Field", mappedBy="columnField", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-
     private $columnFields;
 
     /**
@@ -33,7 +31,7 @@ class WidgetTable extends Widget
     private $option;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="fullWidth", type="boolean", nullable=true)
      */
@@ -41,16 +39,17 @@ class WidgetTable extends Widget
 
     /**
      * To String function
-     * Used in render choices type (Especially in VictoireWidgetRenderBundle)
+     * Used in render choices type (Especially in VictoireWidgetRenderBundle).
      *
-     * @return String
+     * @return string
      */
     public function __toString()
     {
         return 'Table #'.$this->id;
     }
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -59,7 +58,7 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Add row
+     * Add row.
      *
      * @param \Victoire\Widget\TableBundle\Entity\Row $row
      *
@@ -74,7 +73,7 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Remove row
+     * Remove row.
      *
      * @param \Victoire\Widget\TableBundle\Entity\Row $row
      */
@@ -84,7 +83,7 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Get rows
+     * Get rows.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -94,7 +93,7 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Add columnField
+     * Add columnField.
      *
      * @param \Victoire\Widget\TableBundle\Entity\Field $columnField
      *
@@ -102,19 +101,17 @@ class WidgetTable extends Widget
      */
     public function addColumnField($columnField)
     {
-        if($columnField === null )
-        {
-            $columnField = new \Victoire\Widget\TableBundle\Entity\Field;
+        if ($columnField === null) {
+            $columnField = new \Victoire\Widget\TableBundle\Entity\Field();
         }
         $this->columnFields[] = $columnField;
         $columnField->setColumnField($this);
-
 
         return $this;
     }
 
     /**
-     * Remove columnField
+     * Remove columnField.
      *
      * @param \Victoire\Widget\TableBundle\Entity\Field $columnField
      */
@@ -124,7 +121,7 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Get columnFields
+     * Get columnFields.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -134,7 +131,7 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Set option
+     * Set option.
      *
      * @param \Victoire\Widget\TableBundle\Entity\OptionValue $option
      *
@@ -148,7 +145,7 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Get option
+     * Get option.
      *
      * @return \Victoire\Widget\TableBundle\Entity\OptionValue
      */
@@ -158,9 +155,9 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Set fullWidth
+     * Set fullWidth.
      *
-     * @param boolean $fullWidth
+     * @param bool $fullWidth
      *
      * @return WidgetTable
      */
@@ -172,9 +169,9 @@ class WidgetTable extends Widget
     }
 
     /**
-     * Get fullWidth
+     * Get fullWidth.
      *
-     * @return boolean
+     * @return bool
      */
     public function getFullWidth()
     {

@@ -10,17 +10,16 @@ class OptionValueType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('percent' , 'hidden', array(
-                'label' => false,
-                'required' => false
-                )
-            )
-        ;
+            ->add('percent', 'hidden', [
+                'label'    => false,
+                'required' => false,
+                ]
+            );
     }
 
     /**
@@ -28,9 +27,9 @@ class OptionValueType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Victoire\Widget\TableBundle\Entity\OptionValue'
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'Victoire\Widget\TableBundle\Entity\OptionValue',
+        ]);
     }
 
     /**

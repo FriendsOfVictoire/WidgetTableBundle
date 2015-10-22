@@ -5,7 +5,7 @@ namespace Victoire\Widget\TableBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Axis
+ * Axis.
  *
  * @ORM\Table("vic_widget_table_row")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Row
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -30,20 +30,18 @@ class Row
 
     /**
      * @ORM\OneToMany(targetEntity="Value", mappedBy="row", cascade={"persist", "remove"}, orphanRemoval=true)
-     *
-     *
      */
     private $values;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="WidgetTable", inversedBy="rows")
-     *
      */
     private $widgetTable;
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -51,9 +49,9 @@ class Row
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -61,7 +59,7 @@ class Row
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -75,7 +73,7 @@ class Row
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -85,7 +83,7 @@ class Row
     }
 
     /**
-     * Add value
+     * Add value.
      *
      * @param \Victoire\Widget\TableBundle\Entity\Value $value
      *
@@ -100,7 +98,7 @@ class Row
     }
 
     /**
-     * Remove value
+     * Remove value.
      *
      * @param \Victoire\Widget\TableBundle\Entity\Value $value
      */
@@ -110,7 +108,7 @@ class Row
     }
 
     /**
-     * Get values
+     * Get values.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -120,7 +118,7 @@ class Row
     }
 
     /**
-     * Set widgetTable
+     * Set widgetTable.
      *
      * @param \Victoire\Widget\TableBundle\Entity\WidgetTable $widgetTable
      *
@@ -134,7 +132,7 @@ class Row
     }
 
     /**
-     * Get widgetTable
+     * Get widgetTable.
      *
      * @return \Victoire\Widget\TableBundle\Entity\WidgetTable
      */
@@ -144,9 +142,9 @@ class Row
     }
 
     /**
-     * Set compareValueTo0
+     * Set compareValueTo0.
      *
-     * @param boolean $compareValueTo0
+     * @param bool $compareValueTo0
      *
      * @return Row
      */
@@ -158,9 +156,9 @@ class Row
     }
 
     /**
-     * Get compareValueTo0
+     * Get compareValueTo0.
      *
-     * @return boolean
+     * @return bool
      */
     public function getCompareValueTo0()
     {

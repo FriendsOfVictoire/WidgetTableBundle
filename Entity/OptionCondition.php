@@ -5,7 +5,7 @@ namespace Victoire\Widget\TableBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OptionCondition
+ * OptionCondition.
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OptionCondition
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -50,18 +50,16 @@ class OptionCondition
     private $notValid;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="OptionValue", inversedBy="conditions")
-     *
      */
     private $optionValue;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,7 +67,7 @@ class OptionCondition
     }
 
     /**
-     * Set conditionExpression
+     * Set conditionExpression.
      *
      * @param string $conditionExpression
      *
@@ -83,7 +81,7 @@ class OptionCondition
     }
 
     /**
-     * Get conditionExpression
+     * Get conditionExpression.
      *
      * @return string
      */
@@ -93,7 +91,7 @@ class OptionCondition
     }
 
     /**
-     * Set valid
+     * Set valid.
      *
      * @param string $valid
      *
@@ -107,7 +105,7 @@ class OptionCondition
     }
 
     /**
-     * Get valid
+     * Get valid.
      *
      * @return string
      */
@@ -117,7 +115,7 @@ class OptionCondition
     }
 
     /**
-     * Set notValid
+     * Set notValid.
      *
      * @param string $notValid
      *
@@ -131,7 +129,7 @@ class OptionCondition
     }
 
     /**
-     * Get notValid
+     * Get notValid.
      *
      * @return string
      */
@@ -141,7 +139,7 @@ class OptionCondition
     }
 
     /**
-     * Get valid
+     * Get valid.
      *
      * @return string
      */
@@ -151,7 +149,7 @@ class OptionCondition
     }
 
     /**
-     * Get notValid
+     * Get notValid.
      *
      * @return string
      */
@@ -161,7 +159,7 @@ class OptionCondition
     }
 
     /**
-     * Set optionValue
+     * Set optionValue.
      *
      * @param \Victoire\Widget\TableBundle\Entity\OptionValue $optionValue
      *
@@ -175,7 +173,7 @@ class OptionCondition
     }
 
     /**
-     * Get optionValue
+     * Get optionValue.
      *
      * @return \Victoire\Widget\TableBundle\Entity\OptionValue
      */
@@ -185,7 +183,7 @@ class OptionCondition
     }
 
     /**
-     * Set conditionOperator
+     * Set conditionOperator.
      *
      * @param string $conditionOperator
      *
@@ -199,7 +197,7 @@ class OptionCondition
     }
 
     /**
-     * Get conditionOperator
+     * Get conditionOperator.
      *
      * @return string
      */
