@@ -5,7 +5,7 @@ namespace Victoire\Widget\TableBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OptionValue
+ * OptionValue.
  *
  * @ORM\Table("vic_widget_table_option_value")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OptionValue
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -29,9 +29,9 @@ class OptionValue
     private $percent;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -39,7 +39,7 @@ class OptionValue
     }
 
     /**
-     * Set percent
+     * Set percent.
      *
      * @param string $percent
      *
@@ -53,7 +53,7 @@ class OptionValue
     }
 
     /**
-     * Get percent
+     * Get percent.
      *
      * @return string
      */

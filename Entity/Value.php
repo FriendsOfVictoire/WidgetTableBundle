@@ -5,7 +5,7 @@ namespace Victoire\Widget\TableBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Value
+ * Value.
  *
  * @ORM\Table("vic_widget_table_value")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Value
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -29,18 +29,16 @@ class Value
     private $val;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="Row", inversedBy="values")
-     *
      */
     private $row;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -48,7 +46,7 @@ class Value
     }
 
     /**
-     * Set val
+     * Set val.
      *
      * @param string $val
      *
@@ -62,7 +60,7 @@ class Value
     }
 
     /**
-     * Get val
+     * Get val.
      *
      * @return string
      */
@@ -72,7 +70,7 @@ class Value
     }
 
     /**
-     * Set row
+     * Set row.
      *
      * @param \Victoire\Widget\TableBundle\Entity\Row $row
      *
@@ -86,7 +84,7 @@ class Value
     }
 
     /**
-     * Get row
+     * Get row.
      *
      * @return \Victoire\Widget\TableBundle\Entity\Row
      */

@@ -2,16 +2,14 @@
 
 namespace Victoire\Widget\TableBundle\Resolver;
 
-
-use Victoire\Bundle\WidgetBundle\Model\Widget;
-use Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\FormFactory;
-use Victoire\Widget\TableBundle\Form\WidgetTableType;
+use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver;
 use Victoire\Widget\TableBundle\Entity\WidgetTable;
 
 /**
- * CRUD operations on WidgetTable Widget
+ * CRUD operations on WidgetTable Widget.
  *
  * The widget view has two parameters: widget and content
  *
@@ -35,7 +33,6 @@ use Victoire\Widget\TableBundle\Entity\WidgetTable;
  */
 class WidgetTableContentResolver extends BaseWidgetContentResolver
 {
-
     private $formFactory;
 
     public function __construct(FormFactory $formFactory, Router $router)
@@ -45,9 +42,10 @@ class WidgetTableContentResolver extends BaseWidgetContentResolver
     }
 
     /**
-     * Get the static content of the widget
+     * Get the static content of the widget.
      *
      * @param Widget $widget
+     *
      * @return string The static content
      */
     public function getWidgetStaticContent(Widget $widget)
@@ -80,8 +78,10 @@ class WidgetTableContentResolver extends BaseWidgetContentResolver
     }
 
     /**
-     * Get the business entity content
+     * Get the business entity content.
+     *
      * @param Widget $widget
+     *
      * @return string
      */
     public function getWidgetBusinessEntityContent(Widget $widget)
@@ -90,7 +90,7 @@ class WidgetTableContentResolver extends BaseWidgetContentResolver
     }
 
     /**
-     * Get the content of the widget by the entity linked to it
+     * Get the content of the widget by the entity linked to it.
      *
      * @param Widget $widget
      *
@@ -102,9 +102,10 @@ class WidgetTableContentResolver extends BaseWidgetContentResolver
     }
 
     /**
-     * Get the content of the widget for the query mode
+     * Get the content of the widget for the query mode.
      *
      * @param Widget $widget
+     *
      * @throws \Exception
      */
     public function getWidgetQueryContent(Widget $widget)
@@ -112,4 +113,3 @@ class WidgetTableContentResolver extends BaseWidgetContentResolver
         return parent::getWidgetQueryContent($widget);
     }
 }
-

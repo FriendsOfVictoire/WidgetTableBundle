@@ -5,7 +5,7 @@ namespace Victoire\Widget\TableBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Field
+ * Field.
  *
  * @ORM\Table("vic_widget_field")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Field
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -36,18 +36,16 @@ class Field
     private $option;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="WidgetTable", inversedBy="columnFields")
-     *
      */
     private $columnField;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -55,7 +53,7 @@ class Field
     }
 
     /**
-     * Set val
+     * Set val.
      *
      * @param string $val
      *
@@ -69,7 +67,7 @@ class Field
     }
 
     /**
-     * Get val
+     * Get val.
      *
      * @return string
      */
@@ -79,7 +77,7 @@ class Field
     }
 
     /**
-     * Set columnField
+     * Set columnField.
      *
      * @param \Victoire\Widget\TableBundle\Entity\WidgetTable $columnField
      *
@@ -93,7 +91,7 @@ class Field
     }
 
     /**
-     * Get columnField
+     * Get columnField.
      *
      * @return \Victoire\Widget\TableBundle\Entity\WidgetTable
      */
@@ -103,7 +101,7 @@ class Field
     }
 
     /**
-     * Set option
+     * Set option.
      *
      * @param \Victoire\Widget\TableBundle\Entity\OptionValue $option
      *
@@ -117,7 +115,7 @@ class Field
     }
 
     /**
-     * Get option
+     * Get option.
      *
      * @return \Victoire\Widget\TableBundle\Entity\OptionValue
      */
