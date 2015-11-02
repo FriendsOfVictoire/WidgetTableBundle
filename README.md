@@ -1,12 +1,24 @@
-Victoire CMS Table Bundle
+Victoire DCMS Table Bundle
 ============
 
-Need to add a table in a victoire cms website ?
+##What is the purpose of this bundle
 
-First you need to have a valid Symfony2 Victoire edition.
-Then you just have to run the following composer command :
+This bundle gives you access to the *Table Widget*.
+With this widget, you can install table on any page.
+
+You can change the order of any line or column.
+
+##Set Up Victoire
+
+If you haven't already, you can follow the steps to set up Victoire *[here](https://github.com/Victoire/victoire/blob/master/setup.md)*
+
+##Install the Bundle
+
+Run the following composer command :
 
     php composer.phar require victoire/table-widget
+
+###Reminder
 
 Do not forget to add the bundle in your AppKernel !
 
@@ -23,6 +35,8 @@ Do not forget to add the bundle in your AppKernel !
         }
     }
 
-Think to enable VictoireResourcesBundle which brings the redactor library :
+##Preset
+
+Enable VictoireResourcesBundle which brings the redactor library :
 
     new Victoire\Bundle\ResourcesBundle\VictoireResourcesBundle(),

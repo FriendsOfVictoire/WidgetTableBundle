@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2013-11-27T18:15:06Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file date="2013-11-27T18:15:06Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -8,27 +8,27 @@
     <body>
       <trans-unit id="1" resname="widget.table.new.action.label">
         <source>widget.table.new.action.label</source>
-        <target state="new">Tableau</target>
+        <target state="new">Tabla</target>
       </trans-unit>
       <trans-unit id="2" resname="modal.form.widget.type.table.label">
         <source>modal.form.widget.type.table.label</source>
-        <target state="new">Tableau</target>
+        <target state="new">Tabla</target>
       </trans-unit>
       <trans-unit id="3" resname="widget.table.help.title">
         <source>widget.table.help.title</source>
-        <target state="new">Aide</target>
+        <target state="new">Ayuda</target>
       </trans-unit>
       <trans-unit id="4" resname="widget.table.help.content">
         <source>widget.table.help.content</source>
-        <target state="new">Pour modifier la largeur des colonnes, éditer la dernière ligne (ex: 30px)</target>
+        <target state="new">Edit the last line to change the column's width</target>
       </trans-unit>
       <trans-unit id="5" resname="widget.table.form.fullWidth">
         <source>widget.table.form.fullWidth</source>
-        <target state="new">Mettre le tableau à 100% ? (conseillé lorsque les colonnes n'ont pas de largeur définie)</target>
+        <target state="new">Set the table at 100% ? (advised when the width is undefined)</target>
       </trans-unit>
       <trans-unit id="5" resname="widget.table.width.empty">
         <source>widget.table.width.empty</source>
-        <target state="new">aucune largeur définie</target>
+        <target state="new">Width undefined</target>
       </trans-unit>
     </body>
   </file>
