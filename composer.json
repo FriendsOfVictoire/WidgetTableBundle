@@ -2,19 +2,19 @@
     "name": "friendsofvictoire/table-widget",
     "type": "symfony-bundle",
     "description": "Victoire DCMS Table widget",
-    "keywords": ["cms", "victoire", "Table", "widget"],
-    "homepage": "http://appventus.com",
+    "keywords": ["DCMS", "Victoire", "widget", "FriendsofVictoire", "FoV", "Dynamic", "CMS", "Table"],
+    "homepage": "http://victoire.io",
     "license": "MIT",
     "authors": [
         {
             "name": "Charlie LUCAS",
-            "email": "charlie@appventus.com"
+            "email": "charlie@victoire.io"
         }
     ],
     "require": {
         "php"                      : ">=5.3.3",
         "symfony/framework-bundle" : "~2.3",
-        "victoire/victoire"        : "dev-master"
+        "victoire/victoire"        : "~1.3.0"
     },
     "autoload": {
         "psr-0": { "Victoire\\Widget\\TableBundle": "" }
