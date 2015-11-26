@@ -15,9 +15,15 @@
                     {% for fieldColumn in form.columnFields %}
                     <li class="vic-table-square -action" data-abscissa="{{ loop.index0 }}">
                         {% spaceless %}
-                        <button class="table-btn -remove table-delete-column" data-abscissa="{{ loop.index0 }}">
-                            <i class="fa fa-minus-square-o"></i>
-                        </button>
+                            <div class="table-btn -remove table-move-left-column" data-abscissa="{{ loop.index0 }}">
+                                <i class="fa fa-arrow-left"></i>
+                            </div>
+                            <button class="table-btn -remove table-delete-column" data-abscissa="{{ loop.index0 }}">
+                                <i class="fa fa-minus-square-o"></i>
+                            </button>
+                            <div class="table-btn -remove table-move-right-column" data-abscissa="{{ loop.index0 }}">
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
                         {% endspaceless %}
                     </li>
                     {% endfor %}
@@ -56,6 +62,12 @@
                         <button class="table-btn -remove table-delete-row" data-ordered="{{ loop.index0 }}">
                             <i class="fa fa-minus-square-o"></i>
                         </button>
+                        <div class="table-btn -remove table-move-up-row" data-abscissa="{{ loop.index0 }}">
+                            <i class="fa fa-arrow-up"></i>
+                        </div>
+                        <div class="table-btn -remove table-move-down-row" data-abscissa="{{ loop.index0 }}">
+                            <i class="fa fa-arrow-down"></i>
+                        </div>
                         {% endspaceless %}
                     </li>
 
@@ -107,9 +119,15 @@
 <div class="hidden" id="prototype-delete-row">
     <li class="vic-table-square -action" data-ordered="__ORDERED__">
         {% spaceless %}
-        <button class="table-btn -remove table-delete-row" data-ordered="__ORDERED__">
-            <i class="fa fa-minus-square-o"></i>
-        </button>
+            <button class="table-btn -remove table-delete-row" data-ordered="__ORDERED__">
+                <i class="fa fa-minus-square-o"></i>
+            </button>
+            <div class="table-btn -remove table-move-up-row" data-abscissa="__ORDERED__">
+                <i class="fa fa-arrow-up"></i>
+            </div>
+            <div class="table-btn -remove table-move-down-row" data-abscissa="__ORDERED__">
+                <i class="fa fa-arrow-down"></i>
+            </div>
         {% endspaceless %}
     </li>
 </div>
@@ -125,9 +143,15 @@
 <div class="hidden" id="prototype-delete-column">
     <li class="vic-table-square -action" data-abscissa="__ABSCISSA__">
         {% spaceless %}
-        <button class="table-btn -remove table-delete-column" data-abscissa="__ABSCISSA__">
-            <i class="fa fa-minus-square-o"></i>
-        </button>
+            <div class="table-btn -remove table-move-left-column" data-abscissa="__ABSCISSA__">
+                <i class="fa fa-arrow-left"></i>
+            </div>
+            <button class="table-btn -remove table-delete-column" data-abscissa="__ABSCISSA__">
+                <i class="fa fa-minus-square-o"></i>
+            </button>
+            <div class="table-btn -remove table-move-right-column" data-abscissa="__ABSCISSA__">
+                <i class="fa fa-arrow-right"></i>
+            </div>
         {% endspaceless %}
     </li>
 </div>
@@ -250,6 +274,10 @@
             newRowContainer.append(newPlaceholderRow);
             $vic(newRow).insertBefore($vic('#vic-table-row-placeholder').parent('li'));
 
+            $vic('.vic-table-square-value[data-ordered="' + $vic('#table-data').data('ordered') + '"]').children().each(function(i){
+                loadRedactor(this, "hidden");
+            });
+
             $vic(newRow).find('.table-delete-row').on('click', function(){
                 var ordered = $vic(this).data('ordered');
                 $vic('*[data-ordered="' + ordered + '"]:not(#table-data)').remove();
@@ -291,6 +319,10 @@
             newFieldColumn.insertBefore($vic('#table-row-field-placeholder'));
             var newDeleteColumn = $vic(setCoordinate($vic('#prototype-delete-column').html()));
             newDeleteColumn.insertBefore($vic('#table-add-column'));
+
+            $vic('.vic-table-square-value[data-abscissa="' + $vic('#table-data').data('abscissa') + '"]').children().each(function(i){
+                loadRedactor(this, "hidden");
+            });
 
             newDeleteColumn.find('.table-delete-column').on('click', function(){
                 var abscissa = $vic(this).data('abscissa');
@@ -424,5 +456,89 @@
                  $vic(this).removeClass('vic-table-square-placeholder')
             });
         });
+    }
+    $vic(document).on('click','.table-move-right-column', function(event){
+        var column = $vic(this).parents('.vic-table-square')[0];
+        var abscissa = $vic(column).data('abscissa');
+
+        if(abscissa < $vic('#table-data').data('abscissa')){
+            moveTable("right", this);
+        }
+    })
+    $vic(document).on('click','.table-move-left-column', function(){
+        var column = $vic(this).parents('.vic-table-square')[0];
+        var abscissa = $vic(column).data('abscissa');
+
+        if(abscissa > 0){
+            moveTable("left", this);
+        }
+    })
+    $vic(document).on('click','.table-move-up-row', function(){
+        var row = $vic(this).parents('.vic-table-square')[0];
+        var ordered = $vic(row).data('ordered');
+
+        if(ordered > 0){
+            moveTable("up", this);
+        }
+    })
+    $vic(document).on('click','.table-move-down-row', function(){
+        var row = $vic(this).parents('.vic-table-square')[0];
+        var ordered = $vic(row).data('ordered');
+
+        if(ordered < $vic('#table-data').data('ordered')){
+            moveTable("down", this);
+        }
+    })
+    function moveTable(type, elem){
+        var elemToMove = $vic(elem).parents('.vic-table-square')[0];
+        var index = 0;
+        var indexToSwitch = 0;
+        var dataToUse = "";
+        var dataToBrowse = "";
+        var field = "";
+        var allowToSwitch = false;
+        switch (type) {
+            case "up":
+            case "down":
+                field = "input";
+                dataToUse = "ordered";
+                dataToBrowse ="abscissa";
+                index = $vic(elemToMove).data(dataToUse);
+                break;
+            case "left":
+            case "right":
+                field = "textarea";
+                dataToUse = "abscissa";
+                dataToBrowse ="ordered";
+                index = $vic(elemToMove).data(dataToUse);
+                break;
+        }
+        switch (type) {
+            case "up":
+            case "left":
+                indexToSwitch = index - 1;
+                allowToSwitch = indexToSwitch >= 0;
+                break;
+            case "down":
+            case "right":
+                indexToSwitch = index + 1;
+                allowToSwitch = indexToSwitch < $vic('#table-data').data(dataToUse);
+                break;
+        }
+        if(allowToSwitch)
+        {
+            $vic('.vic-table-square-value[data-' + dataToUse + '="' + index + '"]').each(function(i){
+                var elemToSwitch = $vic('.vic-table-square-value[data-' + dataToUse + '="' + indexToSwitch + '"][data-' + dataToBrowse + '="' + i + '"]');
+                var elemToSwitchValue = elemToSwitch.find('textarea').redactor('code.get');
+                elemToSwitch.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
+                $vic(this).find('textarea').redactor('code.set', elemToSwitchValue );
+            });
+
+            var elemToSwitchField = $vic('.vic-table-square.-field[data-' + dataToUse + '="' + indexToSwitch + '"]').find(field);
+            var currentField = $vic('.vic-table-square.-field[data-' + dataToUse + '="' + index + '"]').find(field);
+            var elemToSwitchFieldValue = elemToSwitchField.val();
+            elemToSwitchField.val(currentField.val());
+            currentField.val(elemToSwitchFieldValue);
+        }
     }
 </script>
