@@ -276,7 +276,6 @@
 
             $vic('.vic-table-square-value[data-ordered="' + $vic('#table-data').data('ordered') + '"]').children().each(function(i){
                 loadRedactor(this, "hidden");
-                console.log(this);
             });
 
             $vic(newRow).find('.table-delete-row').on('click', function(){
@@ -323,7 +322,6 @@
 
             $vic('.vic-table-square-value[data-abscissa="' + $vic('#table-data').data('abscissa') + '"]').children().each(function(i){
                 loadRedactor(this, "hidden");
-                console.log(this);
             });
 
             newDeleteColumn.find('.table-delete-column').on('click', function(){
@@ -464,17 +462,7 @@
         var abscissa = $vic(column).data('abscissa');
 
         if(abscissa < $vic('#table-data').data('abscissa')){
-            $vic('.vic-table-square-value[data-abscissa="' + abscissa+ '"]').each(function(i){
-                var nextElem = $vic('.vic-table-square-value[data-abscissa="' + (abscissa + 1) + '"][data-ordered="' + i + '"]');
-                var nextElemValue = nextElem.find('textarea').redactor('code.get');
-                nextElem.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
-                $vic(this).find('textarea').redactor('code.set', nextElemValue );
-            });
-            var nextField = $vic('.vic-table-square.-field[data-abscissa="' + (abscissa + 1) + '"]').find('textarea');
-            var currentField = $vic('.vic-table-square.-field[data-abscissa="' + abscissa + '"]').find('textarea');
-            var nextFieldValue = nextField.val();
-            nextField.val(currentField.val());
-            currentField.val(nextFieldValue);
+            moveTable("right", this);
         }
     })
     $vic(document).on('click','.table-move-left-column', function(){
@@ -482,36 +470,15 @@
         var abscissa = $vic(column).data('abscissa');
 
         if(abscissa > 0){
-            $vic('.vic-table-square-value[data-abscissa="' + abscissa+ '"]').each(function(i){
-                var previousElem = $vic('.vic-table-square-value[data-abscissa="' + (abscissa - 1) + '"][data-ordered="' + i + '"]');
-                var previousElemValue = previousElem.find('textarea').redactor('code.get');
-                previousElem.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
-                $vic(this).find('textarea').redactor('code.set', previousElemValue );
-            });
-            var previousField = $vic('.vic-table-square.-field[data-abscissa="' + (abscissa - 1) + '"]').find('textarea');
-            var currentField = $vic('.vic-table-square.-field[data-abscissa="' + abscissa + '"]').find('textarea');
-            var previousFieldValue = previousField.val();
-            previousField.val(currentField.val());
-            currentField.val(previousFieldValue);
+            moveTable("left", this);
         }
     })
     $vic(document).on('click','.table-move-up-row', function(){
         var row = $vic(this).parents('.vic-table-square')[0];
         var ordered = $vic(row).data('ordered');
 
-
         if(ordered > 0){
-            $vic('.vic-table-square-value[data-ordered="' + ordered+ '"]').each(function(i){
-                var nextElem = $vic('.vic-table-square-value[data-ordered="' + (ordered - 1) + '"][data-abscissa="' + i + '"]');
-                var nextElemValue = nextElem.find('textarea').redactor('code.get');
-                nextElem.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
-                $vic(this).find('textarea').redactor('code.set', nextElemValue );
-            });
-            var nextField = $vic('.vic-table-square.-field[data-ordered="' + (0) + '"]').find('input');
-            var currentField = $vic('.vic-table-square.-field[data-ordered="' + 1 + '"]').find('input');
-            var nextFieldValue = nextField.val();
-            nextField.val(currentField.val());
-            currentField.val(nextFieldValue);
+            moveTable("up", this);
         }
     })
     $vic(document).on('click','.table-move-down-row', function(){
@@ -519,17 +486,59 @@
         var ordered = $vic(row).data('ordered');
 
         if(ordered < $vic('#table-data').data('ordered')){
-            $vic('.vic-table-square-value[data-ordered="' + ordered + '"]').each(function(i){
-                var previousElem = $vic('.vic-table-square-value[data-ordered="' + (ordered + 1) + '"][data-abscissa="' + i + '"]');
-                var previousElemValue = previousElem.find('textarea').redactor('code.get');
-                previousElem.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
-                $vic(this).find('textarea').redactor('code.set', previousElemValue );
-            });
-            var previousField = $vic('.vic-table-square.-field[data-ordered="' + (ordered + 1) + '"]').find('input');
-            var currentField = $vic('.vic-table-square.-field[data-ordered="' + ordered + '"]').find('input');
-            var previousFieldValue = previousField.val();
-            previousField.val(currentField.val());
-            currentField.val(previousFieldValue);
+            moveTable("down", this);
         }
     })
+    function moveTable(type, elem){
+        var elemToMove = $vic(elem).parents('.vic-table-square')[0];
+        var index = 0;
+        var indexToSwitch = 0;
+        var dataToUse = "";
+        var dataToBrowse = "";
+        var field = "";
+        var allowToSwitch = false;
+        switch (type) {
+            case "up":
+            case "down":
+                field = "input";
+                dataToUse = "ordered";
+                dataToBrowse ="abscissa";
+                index = $vic(elemToMove).data(dataToUse);
+                break;
+            case "left":
+            case "right":
+                field = "textarea";
+                dataToUse = "abscissa";
+                dataToBrowse ="ordered";
+                index = $vic(elemToMove).data(dataToUse);
+                break;
+        }
+        switch (type) {
+            case "up":
+            case "left":
+                indexToSwitch = index - 1;
+                allowToSwitch = indexToSwitch >= 0;
+                break;
+            case "down":
+            case "right":
+                indexToSwitch = index + 1;
+                allowToSwitch = indexToSwitch < $vic('#table-data').data(dataToUse);
+                break;
+        }
+        if(allowToSwitch)
+        {
+            $vic('.vic-table-square-value[data-' + dataToUse + '="' + index + '"]').each(function(i){
+                var elemToSwitch = $vic('.vic-table-square-value[data-' + dataToUse + '="' + indexToSwitch + '"][data-' + dataToBrowse + '="' + i + '"]');
+                var elemToSwitchValue = elemToSwitch.find('textarea').redactor('code.get');
+                elemToSwitch.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
+                $vic(this).find('textarea').redactor('code.set', elemToSwitchValue );
+            });
+
+            var elemToSwitchField = $vic('.vic-table-square.-field[data-' + dataToUse + '="' + indexToSwitch + '"]').find(field);
+            var currentField = $vic('.vic-table-square.-field[data-' + dataToUse + '="' + index + '"]').find(field);
+            var elemToSwitchFieldValue = elemToSwitchField.val();
+            elemToSwitchField.val(currentField.val());
+            currentField.val(elemToSwitchFieldValue);
+        }
+    }
 </script>
