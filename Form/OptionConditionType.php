@@ -19,13 +19,13 @@ class OptionConditionType extends AbstractType
             ->add('conditionOperator', ChoiceType::class, [
                     'choices' => [
                         '==' => 'equalTo',
-                        '<' => 'lessThan',
-                        '>' => 'moreThan',
+                        '<'  => 'lessThan',
+                        '>'  => 'moreThan',
                         '<=' => 'lessOrEqualTo',
                         '=>' => 'moreOrEqualTo',
                         '!=' => 'differentTo',
                         ],
-                    'choices_as_values' => true
+                    'choices_as_values' => true,
                 ]
             )
             ->add('conditionExpression', null, [
