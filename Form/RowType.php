@@ -3,8 +3,9 @@
 namespace Victoire\Widget\TableBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Row form type.
@@ -26,8 +27,8 @@ class RowType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('values', 'collection', [
-                'type'           => 'victoire_widget_form_table_value',
+            ->add('values', CollectionType::class, [
+                'entry_type'     => ValueType::class,
                 'required'       => false,
                 'allow_add'      => true,
                 'allow_delete'   => true,
@@ -41,23 +42,13 @@ class RowType extends AbstractType
     /**
      * bind form to Row entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Widget\TableBundle\Entity\Row',
             'translation_domain' => 'victoire',
         ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string The form name
-     */
-    public function getName()
-    {
-        return 'victoire_widget_form_table_row';
     }
 }

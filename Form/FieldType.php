@@ -3,8 +3,9 @@
 namespace Victoire\Widget\TableBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Field form type.
@@ -21,12 +22,12 @@ class FieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('val', 'textarea', [
+            ->add('val', TextareaType::class, [
                     'label'    => false,
                     'required' => false,
                 ]
             )
-            ->add('option', 'victoire_widget_form_table_option_value', [
+            ->add('option', OptionValueType::class, [
                     'label'    => false,
                     'required' => false,
                 ]
@@ -36,25 +37,15 @@ class FieldType extends AbstractType
     /**
      * bind form to Field entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Widget\TableBundle\Entity\Field',
             'translation_domain' => 'victoire',
         ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string The form name
-     */
-    public function getName()
-    {
-        return 'victoire_widget_form_table_field';
     }
 }

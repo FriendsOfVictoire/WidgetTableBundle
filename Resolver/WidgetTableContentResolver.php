@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormFactory;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 use Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver;
 use Victoire\Widget\TableBundle\Entity\WidgetTable;
+use Victoire\Widget\TableBundle\Form\WidgetTableType;
 
 /**
  * CRUD operations on WidgetTable Widget.
@@ -55,19 +56,8 @@ class WidgetTableContentResolver extends BaseWidgetContentResolver
         $table = new WidgetTable();
 
         $form = $this->formFactory->create(
-            'victoire_widget_form_table',
+            WidgetTableType::class,
             $table
-            // array(
-            //     'action' => $this->router->generate(
-            //         'prospectionForm_default_formSubmit',
-            //         array('id' => $table->getWidget()->getId())
-            //     ),
-            //     'method' => 'POST',
-            //     'attr' => array(
-            //         'data-toggle'  => "ajax",
-            //         'data-update' => "vic-widget-".$widget->getId()."-container"
-            //     ),
-            // )
         );
 
         $parameters['form'] = $form->createView();

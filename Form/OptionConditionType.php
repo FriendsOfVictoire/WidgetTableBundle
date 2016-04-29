@@ -3,8 +3,9 @@
 namespace Victoire\Widget\TableBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OptionConditionType extends AbstractType
 {
@@ -15,15 +16,16 @@ class OptionConditionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('conditionOperator', 'choice', [
+            ->add('conditionOperator', ChoiceType::class, [
                     'choices' => [
-                        'equalTo'       => '==',
-                        'lessThan'      => '<',
-                        'moreThan'      => '>',
-                        'lessOrEqualTo' => '<=',
-                        'moreOrEqualTo' => '=>',
-                        'differentTo'   => '!=',
+                        '==' => 'equalTo',
+                        '<'  => 'lessThan',
+                        '>'  => 'moreThan',
+                        '<=' => 'lessOrEqualTo',
+                        '=>' => 'moreOrEqualTo',
+                        '!=' => 'differentTo',
                         ],
+                    'choices_as_values' => true,
                 ]
             )
             ->add('conditionExpression', null, [
@@ -41,20 +43,12 @@ class OptionConditionType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => 'Victoire\Widget\TableBundle\Entity\OptionCondition',
         ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'victoire_widget_form_table_option_condition';
     }
 }
