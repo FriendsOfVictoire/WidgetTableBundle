@@ -3,8 +3,9 @@
 namespace Victoire\Widget\TableBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OptionValueType extends AbstractType
 {
@@ -15,7 +16,7 @@ class OptionValueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('percent', 'hidden', [
+            ->add('percent', HiddenType::class, [
                 'label'    => false,
                 'required' => false,
                 ]
@@ -23,20 +24,12 @@ class OptionValueType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => 'Victoire\Widget\TableBundle\Entity\OptionValue',
         ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'victoire_widget_form_table_option_value';
     }
 }

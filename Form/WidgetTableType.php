@@ -2,8 +2,10 @@
 
 namespace Victoire\Widget\TableBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\CoreBundle\Form\WidgetType;
 
 /**
@@ -21,8 +23,8 @@ class WidgetTableType extends WidgetType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rows', 'collection', [
-                    'type'           => 'victoire_widget_form_table_row',
+            ->add('rows', CollectionType::class, [
+                    'entry_type'     => RowType::class,
                     'required'       => false,
                     'allow_add'      => true,
                     'allow_delete'   => true,
@@ -31,8 +33,8 @@ class WidgetTableType extends WidgetType
                     'prototype_name' => '__ORDERED__',
                 ]
             )
-            ->add('columnFields', 'collection', [
-                    'type'           => 'victoire_widget_form_table_field',
+            ->add('columnFields', CollectionType::class, [
+                    'entry_type'     => FieldType::class,
                     'required'       => false,
                     'allow_add'      => true,
                     'allow_delete'   => true,
@@ -41,12 +43,12 @@ class WidgetTableType extends WidgetType
                     'prototype_name' => '__ABSCISSA__',
                 ]
             )
-            ->add('option', 'victoire_widget_form_table_option_value', [
+            ->add('option', OptionValueType::class, [
                     'label'    => false,
                     'required' => false,
                 ]
             )
-            ->add('fullWidth', 'checkbox', [
+            ->add('fullWidth', CheckboxType::class, [
                     'label'    => 'widget.table.form.fullWidth',
                     'required' => false,
                 ]
@@ -57,11 +59,11 @@ class WidgetTableType extends WidgetType
     /**
      * bind form to WidgetTable entity.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setDefaults([
             'data_class'         => 'Victoire\Widget\TableBundle\Entity\WidgetTable',
@@ -71,15 +73,5 @@ class WidgetTableType extends WidgetType
             'businessEntityId'   => null,
             'mode'               => 'static',
         ]);
-    }
-
-    /**
-     * get form name.
-     *
-     * @return string The form name
-     */
-    public function getName()
-    {
-        return 'victoire_widget_form_table';
     }
 }
