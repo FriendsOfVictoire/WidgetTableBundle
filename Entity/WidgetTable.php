@@ -53,6 +53,7 @@ class WidgetTable extends Widget
      */
     public function __construct()
     {
+        parent::__construct();
         $this->rows = new \Doctrine\Common\Collections\ArrayCollection();
         $this->columnFields = new \Doctrine\Common\Collections\ArrayCollection();
     }
