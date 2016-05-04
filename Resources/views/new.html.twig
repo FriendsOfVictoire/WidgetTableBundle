@@ -2,19 +2,5 @@
 
 {% block form %}
 {% include 'VictoireWidgetTableBundle::_form.html.twig' %}
-<script>
-    var numberColumn = $vic('#table-data').data('abscissa');
-    var numberRow =  $vic('#table-data').data('ordered');
-    if (numberColumn < 2) {
-        for (var i = numberColumn; i < 2; i++) {
-            $vic('#table-add-column-btn').click();
-        };
-    };
-    if (numberRow < 2) {
-        for (var i = numberRow; i < 2; i++) {
-            $vic('#table-add-row-btn').click();
-        };
-    };
-</script>
 {% endblock form %}
 

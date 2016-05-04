@@ -53,15 +53,6 @@ class WidgetTableContentResolver extends BaseWidgetContentResolver
     {
         $parameters = parent::getWidgetStaticContent($widget);
 
-        $table = new WidgetTable();
-
-        $form = $this->formFactory->create(
-            WidgetTableType::class,
-            $table
-        );
-
-        $parameters['form'] = $form->createView();
-
         $parameters['widget'] = $widget;
 
         return $parameters;
