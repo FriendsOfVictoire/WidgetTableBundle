@@ -99,7 +99,7 @@
         </ul>
         {{form_widget(form.fullWidth)}}
     </div>
-    
+
     <div class="hidden">
         {{ form_row(form.rows) }}
         {{ form_row(form.columnFields) }}
@@ -357,7 +357,7 @@
                 $vic('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).addClass('hidden');
             },
             focusCallback : function(){
-                $vic('#form[name="{{ form.vars.name }}"] values-redactor-toolbar-' + id).removeClass('hidden');
+                $vic('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).removeClass('hidden');
             },
             plugins : ['fontcolor', 'fontfamily', 'fontsize'],
             toolbarExternal: 'form[name="{{ form.vars.name }}"] #values-redactor-toolbar-'+ id
