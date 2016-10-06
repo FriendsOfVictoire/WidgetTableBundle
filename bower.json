@@ -1,0 +1,7 @@
+{
+    "name": "friendsofvictoire/table-widget",
+    "dependencies": {
+        "redactor": "https://github.com/hrmsautran/bower-redactor/archive/10.2.5.zip",
+        "x-editable": "~1.5.1"
+    }
+}
