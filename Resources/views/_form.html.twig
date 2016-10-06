@@ -207,7 +207,7 @@
     {% endif %}
 
     <li class="vic-table-square vic-table-square-value" data-ordered="{{ ordered|default('__ORDERED__') }}" data-abscissa="{{ abscissa }}">
-        {{ form_widget(form.val, {'attr' : {'onclick' : "loadRedactor{{ form.vars.ide(this);"}}) }}
+        {{ form_widget(form.val) }}
     </li>
 {% endmacro %}
 
@@ -230,144 +230,203 @@
     [
         'bold', 'italic', 'deleted','unorderedlist', 'orderedlist', 'link', 'alignment', 'fontcolor', 'backcolor', 'fontsize', 'fontfamily'
     ];
-    $vic(document).ready(function() {
-        $vic('form[name="{{ form.vars.name }}"] .vic-table-square-value').children().each(function(){
+    $(document).ready(function() {
+        $('form[name="{{ form.vars.name }}"] .vic-table-value').each(function(){
             loadRedactor{{ form.vars.id }}(this, 'hidden');
         });
-        $vic('form[name="{{ form.vars.name }}"] .table-option-percent').each(function(){
-            var percentForm = $vic(this).children('.table-option-percent-form');
-            $vic(this).children('.table-option-percent-value').editable({
+        $('form[name="{{ form.vars.name }}"] .table-option-percent').each(function(){
+            var percentForm = $(this).children('.table-option-percent-form');
+            $(this).children('.table-option-percent-value').editable({
                 type: 'text',
                 emptytext: '{{"widget.table.width.empty"|trans}}',
                 placement: 'bottom',
                 success: function(response, newValue){
-                    $vic(this).siblings('.table-option-percent-form').children('input').val(newValue);
+                    $(this).siblings('.table-option-percent-form').children('input').val(newValue);
                 }
             });
         });
-        $vic('form[name="{{ form.vars.name }}"] .table-delete-row').on('click', function(e){
+        $('form[name="{{ form.vars.name }}"] .table-delete-row').on('click', function(e){
             e.preventDefault();
-            var ordered = $vic(this).data('ordered');
-            $vic('form[name="{{ form.vars.name }}"] *[data-ordered="' + ordered + '"]:not(#table-data)').remove();
-            updateDataGrid{{ form.vars.id }}('ordered', ordered);
+            var ordered = $(this).data('ordered');
+            $('form[name="{{ form.vars.name }}"] *[data-ordered="' + ordered + '"]:not(#table-data)').remove();
+            updateNextIndexes{{ form.vars.id }}('ordered', ordered);
         });
-        $vic('form[name="{{ form.vars.name }}"] .table-delete-column').on('click', function(e){
+        $('form[name="{{ form.vars.name }}"] .table-delete-column').on('click', function(e){
             e.preventDefault();
-            var abscissa = $vic(this).data('abscissa');
-            $vic('form[name="{{ form.vars.name }}"] *[data-abscissa="' + abscissa + '"]:not(#table-data)').remove();
-            updateDataGrid{{ form.vars.id }}('abscissa', abscissa);
+            var abscissa = $(this).data('abscissa');
+            $('form[name="{{ form.vars.name }}"] *[data-abscissa="' + abscissa + '"]:not(#table-data)').remove();
+            updateNextIndexes{{ form.vars.id }}('abscissa', abscissa);
         });
 
-        $vic('form[name="{{ form.vars.name }}"] #table-add-row-btn').on('click', function(e){
+        $('form[name="{{ form.vars.name }}"] #table-add-row-btn').on('click', function(e){
             e.preventDefault();
-            var numberColumn = $vic('form[name="{{ form.vars.name }}"] #table-data').data('abscissa');
-            var newRow = $vic(setCoordinate{{ form.vars.id }}('<li data-ordered="__ORDERED__"><ul class="vic-table-row"></ul></li>'));
+            var numberColumn = $('form[name="{{ form.vars.name }}"] #table-data').data('abscissa');
+            var newRow = $(setCoordinate{{ form.vars.id }}('<li data-ordered="__ORDERED__"><ul class="vic-table-row"></ul></li>'));
             var newRowContainer = newRow.children('ul');
-            var newDeleteRow = setCoordinate{{ form.vars.id }}($vic('#prototype-delete-row').html());
-            var newFieldRow = $vic(setCoordinate{{ form.vars.id }}($vic('#prototype-field-row').html()));
-            var newPlaceholderRow = setCoordinate{{ form.vars.id }}($vic('#prototype-placeholder-row').html());
-            var fieldRowPrototype = setCoordinate{{ form.vars.id }}($vic(this).data('prototype'));
-            var valuePrototype = $vic(this).data('value-prototype');
+            var newDeleteRow = setCoordinate{{ form.vars.id }}($('#prototype-delete-row').html());
+            var newFieldRow = $(setCoordinate{{ form.vars.id }}($('#prototype-field-row').html()));
+            var newPlaceholderRow = setCoordinate{{ form.vars.id }}($('#prototype-placeholder-row').html());
+            var fieldRowPrototype = setCoordinate{{ form.vars.id }}($(this).data('prototype'));
+            var valuePrototype = $(this).data('value-prototype');
             newRowContainer.append(newDeleteRow);
-            newFieldRow.append($vic(fieldRowPrototype));
+            newFieldRow.append($(fieldRowPrototype));
             newRowContainer.append(newFieldRow);
             for (var i = 0; i < numberColumn; i++) {
                 var abscissa = i || '0';
                 var newValue = setCoordinate{{ form.vars.id }}(valuePrototype, abscissa, null);
-                newRowContainer.append($vic(newValue));
-            };
+                newRowContainer.append($(newValue));
+            }
             newRowContainer.append(newPlaceholderRow);
-            $vic(newRow).insertBefore($vic('form[name="{{ form.vars.name }}"] #vic-table-row-placeholder').parent('li'));
+            $(newRow).insertBefore($('form[name="{{ form.vars.name }}"] #vic-table-row-placeholder').parent('li'));
 
-            $vic('form[name="{{ form.vars.name }}"] .vic-table-square-value[data-ordered="' + $vic('#table-data').data('ordered') + '"]').children().each(function(i){
-                loadRedactor{{ form.vars.id }}(this, "hidden");
+            $('form[name="{{ form.vars.name }}"] .vic-table-square[data-ordered="' + $('#table-data').data('ordered') + '"] .vic-table-value').each(function(){
+                loadRedactor{{ form.vars.id }}(this, 'hidden');
             });
 
-            $vic(newRow).find('.table-delete-row').on('click', function(){
-                var ordered = $vic(this).data('ordered');
-                $vic('form[name="{{ form.vars.name }}"] *[data-ordered="' + ordered + '"]:not(#table-data)').remove();
-                updateDataGrid{{ form.vars.id }}('ordered', ordered);
+            $(newRow).find('.table-delete-row').on('click', function(){
+                var ordered = $(this).data('ordered');
+                $('form[name="{{ form.vars.name }}"] *[data-ordered="' + ordered + '"]:not(#table-data)').remove();
+                updateNextIndexes{{ form.vars.id }}('ordered', ordered);
 
             });
             updateData{{ form.vars.id }}('ordered');
         });
-        $vic('form[name="{{ form.vars.name }}"] #table-add-column-btn').on('click', function(e){
+        $('form[name="{{ form.vars.name }}"] #table-add-column-btn').on('click', function(e){
             e.preventDefault();
-            var numberRow = $vic('form[name="{{ form.vars.name }}"] #table-data').data('ordered');
-            var valuePrototype = $vic('form[name="{{ form.vars.name }}"] #table-add-row-btn').data('value-prototype');
+            var numberRow = $('form[name="{{ form.vars.name }}"] #table-data').data('ordered');
+            var valuePrototype = $('form[name="{{ form.vars.name }}"] #table-add-row-btn').data('value-prototype');
 
-            var newPlaceholderColumn = setCoordinate{{ form.vars.id }}($vic('#prototype-placeholder-column').html());
-            var optionPrototype = setCoordinate{{ form.vars.id }}($vic(this).data('option-prototype'));
-            placeholderPrototype = $vic(newPlaceholderColumn);
+            var newPlaceholderColumn = setCoordinate{{ form.vars.id }}($('#prototype-placeholder-column').html());
+            var optionPrototype = setCoordinate{{ form.vars.id }}($(this).data('option-prototype'));
+            placeholderPrototype = $(newPlaceholderColumn);
             placeholderPrototype.append(optionPrototype);
 
             placeholderPrototype.find('.table-option-percent').each(function(){
-                var percentForm = $vic(this).children('.table-option-percent-form');
-                $vic(this).children('.table-option-percent-value').editable({
+                var percentForm = $(this).children('.table-option-percent-form');
+                $(this).children('.table-option-percent-value').editable({
                     type: 'text',
                     emptytext: '{{"widget.table.width.empty"|trans}}',
                     placement: 'bottom',
                     success: function(response, newValue){
-                        $vic(this).siblings('.table-option-percent-form').children('input').val(newValue);
+                        $(this).siblings('.table-option-percent-form').children('input').val(newValue);
                     }
                 });
             });
-            placeholderPrototype.insertBefore($vic('form[name="{{ form.vars.name }}"] #vic-table-square-corner'));
-            $vic('form[name="{{ form.vars.name }}"] #table .table-placeholder-row').each(function(){
-                var ordered = ($vic(this).data('ordered') || '0' );
+            placeholderPrototype.insertBefore($('form[name="{{ form.vars.name }}"] #vic-table-square-corner'));
+            $('form[name="{{ form.vars.name }}"] #table .table-placeholder-row').each(function(){
+                var ordered = ($(this).data('ordered') || '0' );
                 var newValue = setCoordinate{{ form.vars.id }}(valuePrototype, null, ordered);
-                $vic(newValue).insertBefore($vic(this));
+                $(newValue).insertBefore($(this));
             });
-            var fieldColumnPrototype = $vic(setPosition{{ form.vars.id }}(setCoordinate{{ form.vars.id }}($vic(this).data('prototype')), 'abscissa'));
-            var newFieldColumn = $vic(setCoordinate{{ form.vars.id }}($vic('#prototype-field-column').html()));
+            var fieldColumnPrototype = $(setPosition{{ form.vars.id }}(setCoordinate{{ form.vars.id }}($(this).data('prototype')), 'abscissa'));
+            var newFieldColumn = $(setCoordinate{{ form.vars.id }}($('#prototype-field-column').html()));
             newFieldColumn.append(fieldColumnPrototype);
-            newFieldColumn.insertBefore($vic('form[name="{{ form.vars.name }}"] #table-row-field-placeholder'));
-            var newDeleteColumn = $vic(setCoordinate{{ form.vars.id }}($vic('#prototype-delete-column').html()));
-            newDeleteColumn.insertBefore($vic('form[name="{{ form.vars.name }}"] #table-add-column'));
+            newFieldColumn.insertBefore($('form[name="{{ form.vars.name }}"] #table-row-field-placeholder'));
+            var newDeleteColumn = $(setCoordinate{{ form.vars.id }}($('#prototype-delete-column').html()));
+            newDeleteColumn.insertBefore($('form[name="{{ form.vars.name }}"] #table-add-column'));
 
-            $vic('form[name="{{ form.vars.name }}"] .vic-table-square-value[data-abscissa="' + $vic('#table-data').data('abscissa') + '"]').children().each(function(i){
-                loadRedactor{{ form.vars.id }}(this, "hidden");
+            $('form[name="{{ form.vars.name }}"] .vic-table-square[data-abscissa="' + $('#table-data').data('abscissa') + '"] .vic-table-value').each(function(){
+                loadRedactor{{ form.vars.id }}(this, 'hidden');
             });
 
             newDeleteColumn.find('.table-delete-column').on('click', function(){
-                var abscissa = $vic(this).data('abscissa');
-                $vic('form[name="{{ form.vars.name }}"] *[data-abscissa="' + abscissa + '"]:not(#table-data)').remove();
-                updateDataGrid{{ form.vars.id }}('abscissa', abscissa);
+                var abscissa = $(this).data('abscissa');
+                $('form[name="{{ form.vars.name }}"] *[data-abscissa="' + abscissa + '"]:not(#table-data)').remove();
+                updateNextIndexes{{ form.vars.id }}('abscissa', abscissa);
             });
             updateData{{ form.vars.id }}('abscissa');
         });
     });
+
     function loadRedactor{{ form.vars.id }}(elem, toolbarClass)
     {
         if(toolbarClass === "undefined"){
             toolbarClass = '';
         }
 
-        var id = $vic(elem).context.id;
-        if ( $vic('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).length == 0)
+        var id = $(elem).context.id;
+        if ( $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).length == 0)
         {
-            $vic('form[name="{{ form.vars.name }}"] #values-redactor-toolbar').append("<div id=\"values-redactor-toolbar-" + id + "\" class=\"" + toolbarClass + "\"></div>");
+            $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar').append("<div id=\"values-redactor-toolbar-" + id + "\" class=\"" + toolbarClass + "\"></div>");
         }
-        $vic('form[name="{{ form.vars.name }}"] #' + id).redactor({
+        $('form[name="{{ form.vars.name }}"] #' + id).redactor({
             buttons : buttons,
             maxHeight: 36,
             minHeight: 36,
             focus: true,
             blurCallback : function(){
-                $vic('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).addClass('hidden');
+                $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).addClass('hidden');
             },
             focusCallback : function(){
-                $vic('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).removeClass('hidden');
+                $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).removeClass('hidden');
             },
             plugins : ['fontcolor', 'fontfamily', 'fontsize'],
             toolbarExternal: 'form[name="{{ form.vars.name }}"] #values-redactor-toolbar-'+ id
         });
     }
 
+    /**
+     * Move a row | column to a direction
+     * @param direction
+     * @param elem
+     */
+    function moveTable{{ form.vars.id }}(direction, elem){
+        var elemToMove = $(elem).parents('.vic-table-square')[0];
+        var index = 0;
+        var indexToSwitch = 0;
+        var dataToUse = "";
+        var dataToBrowse = "";
+        var field = "";
+        var allowToSwitch = false;
+        switch (direction) {
+            case "up":
+            case "down":
+                field = "input";
+                dataToUse = "ordered";
+                dataToBrowse ="abscissa";
+                index = $(elemToMove).data(dataToUse);
+                break;
+            case "left":
+            case "right":
+                field = "textarea";
+                dataToUse = "abscissa";
+                dataToBrowse ="ordered";
+                index = $(elemToMove).data(dataToUse);
+                break;
+        }
+        switch (direction) {
+            case "up":
+            case "left":
+                indexToSwitch = index - 1;
+                allowToSwitch = indexToSwitch >= 0;
+                break;
+            case "down":
+            case "right":
+                indexToSwitch = index + 1;
+                allowToSwitch = indexToSwitch < $('form[name="{{ form.vars.name }}"] #table-data').data(dataToUse);
+                break;
+        }
+        if(allowToSwitch)
+        {
+            $('form[name="{{ form.vars.name }}"] .vic-table-square-value[data-' + dataToUse + '="' + index + '"]').each(function(i){
+                var elemToSwitch = $('form[name="{{ form.vars.name }}"] .vic-table-square-value[data-' + dataToUse + '="' + indexToSwitch + '"][data-' + dataToBrowse + '="' + i + '"]');
+                var elemToSwitchValue = elemToSwitch.find('textarea').redactor('code.get');
+                elemToSwitch.find('textarea').redactor('code.set', $(this).find('textarea').redactor('code.get') );
+                $(this).find('textarea').redactor('code.set', elemToSwitchValue );
+            });
+
+            var elemToSwitchField = $('form[name="{{ form.vars.name }}"] .vic-table-square.-field[data-' + dataToUse + '="' + indexToSwitch + '"]').find(field);
+            var currentField = $('form[name="{{ form.vars.name }}"] .vic-table-square.-field[data-' + dataToUse + '="' + index + '"]').find(field);
+            var elemToSwitchFieldValue = elemToSwitchField.val();
+            elemToSwitchField.val(currentField.val());
+            currentField.val(elemToSwitchFieldValue);
+        }
+    }
+
     function setCoordinate{{ form.vars.id }}(prototype, abscissa, ordered) {
-        var data = $vic('form[name="{{ form.vars.name }}"] #table-data');
-        var abscissa = abscissa || data.data('abscissa');
-        var ordered = ordered || data.data('ordered');
+        var data = $('form[name="{{ form.vars.name }}"] #table-data');
+        abscissa = abscissa || data.data('abscissa');
+        ordered = ordered || data.data('ordered');
         prototype = replaceStringProto{{ form.vars.id }}('__ABSCISSA__', abscissa, prototype);
         prototype = replaceStringProto{{ form.vars.id }}('__ORDERED__', ordered, prototype);
         return prototype;
@@ -375,7 +434,7 @@
 
     function setPosition{{ form.vars.id }}(prototype, type)
     {
-        var data = $vic('form[name="{{ form.vars.name }}"] #table-data');
+        var data = $('form[name="{{ form.vars.name }}"] #table-data');
         switch(type){
             case 'ordered':
                 return replaceStringProto{{ form.vars.id }}('__POSITION__', data.data('ordered'), prototype);
@@ -388,37 +447,57 @@
         return prototype;
     }
 
+    /**
+     * Replace the __ABCISSA__ prototype value into a dynamic value
+     * @param proto
+     * @param value
+     * @param str
+     * @returns {*}
+     */
     function replaceStringProto{{ form.vars.id }}(proto, value, str) {
         return str.replace(new RegExp(proto, 'g'), value);
     }
+
+    /**
+     * Synchronize the index of each form type (abscissa or ordered) after moving down|up a row or column
+     *
+     * @param type
+     */
     function updateData{{ form.vars.id }}(type) {
-        var data = $vic('form[name="{{ form.vars.name }}"] #table-data');
+        var data = $('form[name="{{ form.vars.name }}"] #table-data');
         switch(type){
             case 'ordered':
                 ordered = data.data('ordered');
-                $vic('form[name="{{ form.vars.name }}"] #table-data').data('ordered', ordered + 1);
-                $vic('form[name="{{ form.vars.name }}"] #table-data').attr('data-ordered', ordered + 1);
+                $('form[name="{{ form.vars.name }}"] #table-data').data('ordered', ordered + 1);
+                $('form[name="{{ form.vars.name }}"] #table-data').attr('data-ordered', ordered + 1);
             break;
             case 'abscissa':
                 abscissa = data.data('abscissa');
-                $vic('form[name="{{ form.vars.name }}"] #table-data').data('abscissa', abscissa + 1);
-                $vic('form[name="{{ form.vars.name }}"] #table-data').attr('data-abscissa', abscissa + 1);
+                $('form[name="{{ form.vars.name }}"] #table-data').data('abscissa', abscissa + 1);
+                $('form[name="{{ form.vars.name }}"] #table-data').attr('data-abscissa', abscissa + 1);
             break;
             default:
         }
     }
-    function updateDataGrid{{ form.vars.id }}(type, value){
-        var data = $vic('form[name="{{ form.vars.name }}"] #table-data');
+
+    /**
+     * update the index when removing a row or a column
+     *
+     * @param type
+     * @param value
+     */
+    function updateNextIndexes{{ form.vars.id }}(type, value){
+        var data = $('form[name="{{ form.vars.name }}"] #table-data');
         switch(type){
             case 'ordered':
                 orderedMax = data.data('ordered');
                 for (i = value ; i < orderedMax; i++) {
-                    $vic('form[name="{{ form.vars.name }}"] *[data-ordered="' + i + '"]').each(function(){
-                        var ordered = $vic(this).data('ordered') - 1;
-                        $vic(this).data('ordered', ordered);
-                        $vic(this).attr('data-ordered', ordered);
+                    $('form[name="{{ form.vars.name }}"] *[data-ordered="' + i + '"]').each(function(){
+                        var ordered = $(this).data('ordered') - 1;
+                        $(this).data('ordered', ordered);
+                        $(this).attr('data-ordered', ordered);
                     });
-                };
+                }
                 orderedMax = (orderedMax - 1);
                 data.data('ordered', orderedMax);
                 data.attr('data-ordered', orderedMax);
@@ -426,12 +505,12 @@
             case 'abscissa':
                 abscissaMax = data.data('abscissa');
                 for (i = value; i < abscissaMax; i++) {
-                    $vic('form[name="{{ form.vars.name }}"] *[data-abscissa="' + i + '"]').each(function(){
-                        var abscissa = $vic(this).data('abscissa') - 1;
-                        $vic(this).data('abscissa', abscissa);
-                        $vic(this).attr('data-abscissa', abscissa);
+                    $('form[name="{{ form.vars.name }}"] *[data-abscissa="' + i + '"]').each(function(){
+                        var abscissa = $(this).data('abscissa') - 1;
+                        $(this).data('abscissa', abscissa);
+                        $(this).attr('data-abscissa', abscissa);
                     });
-                };
+                }
                 abscissaMax = (abscissaMax - 1);
                 data.data('abscissa', abscissaMax);
                 data.attr('data-abscissa', abscissaMax);
@@ -440,103 +519,80 @@
         }
 
     }
-    $vic(document).on('click','form[name="{{ form.vars.name }}"] .table-move-right-column', function(event){
-        var column = $vic(this).parents('.vic-table-square')[0];
-        var abscissa = $vic(column).data('abscissa');
 
-        if(abscissa < $vic('form[name="{{ form.vars.name }}"] #table-data').data('abscissa')){
+    $(document).on('click','form[name="{{ form.vars.name }}"] .table-move-right-column', function(event){
+        var column = $(this).parents('.vic-table-square')[0];
+        var abscissa = $(column).data('abscissa');
+
+        if(abscissa < $('form[name="{{ form.vars.name }}"] #table-data').data('abscissa')){
             moveTable{{ form.vars.id }}("right", this);
         }
-    })
-    $vic(document).on('click','form[name="{{ form.vars.name }}"] .table-move-left-column', function(){
-        var column = $vic(this).parents('.vic-table-square')[0];
-        var abscissa = $vic(column).data('abscissa');
+    });
+
+    $(document).on('click','form[name="{{ form.vars.name }}"] .table-move-left-column', function(){
+        var column = $(this).parents('.vic-table-square')[0];
+        var abscissa = $(column).data('abscissa');
 
         if(abscissa > 0){
             moveTable{{ form.vars.id }}("left", this);
         }
-    })
-    $vic(document).on('click','form[name="{{ form.vars.name }}"] .table-move-up-row', function(){
-        var row = $vic(this).parents('.vic-table-square')[0];
-        var ordered = $vic(row).data('ordered');
+    });
+
+    $(document).on('click','form[name="{{ form.vars.name }}"] .table-move-up-row', function(){
+        var row = $(this).parents('.vic-table-square')[0];
+        var ordered = $(row).data('ordered');
 
         if(ordered > 0){
             moveTable{{ form.vars.id }}("up", this);
         }
-    })
-    $vic(document).on('click','form[name="{{ form.vars.name }}"] .table-move-down-row', function(){
-        var row = $vic(this).parents('.vic-table-square')[0];
-        var ordered = $vic(row).data('ordered');
+    });
 
-        if(ordered < $vic('#table-data').data('ordered')){
+    $(document).on('click','form[name="{{ form.vars.name }}"] .table-move-down-row', function(){
+        var row = $(this).parents('.vic-table-square')[0];
+        var ordered = $(row).data('ordered');
+
+        if(ordered < $('#table-data').data('ordered')){
             moveTable{{ form.vars.id }}("down", this);
         }
-    })
-    function moveTable{{ form.vars.id }}(type, elem){
-        var elemToMove = $vic(elem).parents('.vic-table-square')[0];
-        var index = 0;
-        var indexToSwitch = 0;
-        var dataToUse = "";
-        var dataToBrowse = "";
-        var field = "";
-        var allowToSwitch = false;
-        switch (type) {
-            case "up":
-            case "down":
-                field = "input";
-                dataToUse = "ordered";
-                dataToBrowse ="abscissa";
-                index = $vic(elemToMove).data(dataToUse);
-                break;
-            case "left":
-            case "right":
-                field = "textarea";
-                dataToUse = "abscissa";
-                dataToBrowse ="ordered";
-                index = $vic(elemToMove).data(dataToUse);
-                break;
-        }
-        switch (type) {
-            case "up":
-            case "left":
-                indexToSwitch = index - 1;
-                allowToSwitch = indexToSwitch >= 0;
-                break;
-            case "down":
-            case "right":
-                indexToSwitch = index + 1;
-                allowToSwitch = indexToSwitch < $vic('form[name="{{ form.vars.name }}"] #table-data').data(dataToUse);
-                break;
-        }
-        if(allowToSwitch)
-        {
-            $vic('form[name="{{ form.vars.name }}"] .vic-table-square-value[data-' + dataToUse + '="' + index + '"]').each(function(i){
-                var elemToSwitch = $vic('form[name="{{ form.vars.name }}"] .vic-table-square-value[data-' + dataToUse + '="' + indexToSwitch + '"][data-' + dataToBrowse + '="' + i + '"]');
-                var elemToSwitchValue = elemToSwitch.find('textarea').redactor('code.get');
-                elemToSwitch.find('textarea').redactor('code.set', $vic(this).find('textarea').redactor('code.get') );
-                $vic(this).find('textarea').redactor('code.set', elemToSwitchValue );
-            });
-
-            var elemToSwitchField = $vic('form[name="{{ form.vars.name }}"] .vic-table-square.-field[data-' + dataToUse + '="' + indexToSwitch + '"]').find(field);
-            var currentField = $vic('form[name="{{ form.vars.name }}"] .vic-table-square.-field[data-' + dataToUse + '="' + index + '"]').find(field);
-            var elemToSwitchFieldValue = elemToSwitchField.val();
-            elemToSwitchField.val(currentField.val());
-            currentField.val(elemToSwitchFieldValue);
-        }
-    }
+    });
 
     {% if form.vars.data.id is null %}
-        var numberColumn = $vic('form[name="{{ form.vars.name }}"] #table-data').data('abscissa');
-        var numberRow =  $vic('form[name="{{ form.vars.name }}"] #table-data').data('ordered');
+        var numberColumn = $('form[name="{{ form.vars.name }}"] #table-data').data('abscissa');
+        var numberRow =  $('form[name="{{ form.vars.name }}"] #table-data').data('ordered');
         if (numberColumn < 2) {
             for (var i = numberColumn; i < 2; i++) {
-                $vic('form[name="{{ form.vars.name }}"] #table-add-column-btn').click();
-            };
-        };
+                $('form[name="{{ form.vars.name }}"] #table-add-column-btn').click();
+            }
+        }
         if (numberRow < 2) {
             for (var i = numberRow; i < 2; i++) {
-                $vic('form[name="{{ form.vars.name }}"] #table-add-row-btn').click();
-            };
-        };
+                $('form[name="{{ form.vars.name }}"] #table-add-row-btn').click();
+            }
+        }
     {% endif %}
 </script>
+
+<style>
+    /**
+     * Redactor hacks to get working with victoire modale
+     */
+    .redactor-toolbar-tooltip {
+        z-index: 1104;
+    }
+
+    .redactor-box-fullscreen {
+        z-index: 1101;
+    }
+    .redactor-toolbar {
+        z-index: 1100;
+    }
+    .redactor-dropdown {
+        z-index: 1102;
+    }
+    #redactor-modal-overlay,
+    #redactor-modal-box,
+    #redactor-modal {
+        z-index: 1103;
+    }
+    <!-- END Redactor hacks -->
+</style>
