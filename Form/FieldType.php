@@ -25,9 +25,9 @@ class FieldType extends AbstractType
             ->add('val', TextareaType::class, [
                     'label'    => false,
                     'required' => false,
-                    'attr' => [
-                        'class' => 'vic-table-value'
-                    ]
+                    'attr'     => [
+                        'class' => 'vic-table-value',
+                    ],
                 ]
             )
             ->add('option', OptionValueType::class, [
