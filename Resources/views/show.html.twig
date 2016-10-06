@@ -19,12 +19,12 @@
             <thead>
                 <tr>
                     {% if displayRowsFields and displayColumnsFields%}
-                        <th {% if widget.option %}style="width:{{widget.option.percent}}"{% endif %}></th>
+                        <th {% if widget.option %}style="width:{{ widget.option.percent }}"{% endif %}></th>
                     {% endif %}
                     {% for column in widget.columnFields %}
-                        <th class="widget-table-show-td" {% if column.option %}style="width:{{column.option.percent}}"{% endif %}>
+                        <th class="widget-table-show-td" {% if column.option %}style="width:{{ column.option.percent }}"{% endif %}>
                             <div class="widget-table-show-column">
-                                {{column.val}}
+                                {{ column.val|raw }}
                             </div>
                         </th>
                     {% endfor %}
@@ -37,14 +37,14 @@
                         {% if displayRowsFields %}
                         <th class="widget-table-show-td">
                             <div class="pull-left widget-table-show-row">
-                                {{row.name}}
+                                {{ row.name|raw }}
                             </div>
                         </th>
                         {% endif %}
                         {% for value in row.values %}
                             <td class="widget-table-show-td">
                                 <div class="widget-table-show-value ">
-                                    {{value.val|raw}}
+                                    {{ value.val|raw }}
                                 </div>
                             </td>
                         {% endfor %}

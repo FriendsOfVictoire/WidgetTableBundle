@@ -25,6 +25,9 @@ class ValueType extends AbstractType
             ->add('val', TextareaType::class, [
                 'label'    => false,
                 'required' => false,
+                'attr' => [
+                    'class' => 'vic-table-value'
+                ]
             ]
         );
     }

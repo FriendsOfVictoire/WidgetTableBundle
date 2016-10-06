@@ -4,6 +4,7 @@ namespace Victoire\Widget\TableBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,9 +23,12 @@ class RowType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, [
+            ->add('name', TextareaType::class, [
                     'label'    => false,
                     'required' => false,
+                    'attr' => [
+                        'class' => 'vic-table-value'
+                    ]
                 ]
             )
             ->add('values', CollectionType::class, [
