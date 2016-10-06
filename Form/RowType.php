@@ -26,9 +26,9 @@ class RowType extends AbstractType
             ->add('name', TextareaType::class, [
                     'label'    => false,
                     'required' => false,
-                    'attr' => [
-                        'class' => 'vic-table-value'
-                    ]
+                    'attr'     => [
+                        'class' => 'vic-table-value',
+                    ],
                 ]
             )
             ->add('values', CollectionType::class, [
