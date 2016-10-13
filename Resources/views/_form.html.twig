@@ -347,7 +347,7 @@
         var id = $(elem).context.id;
         if ( $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).length == 0)
         {
-            $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar').append("<div id=\"values-redactor-toolbar-" + id + "\" class=\"" + toolbarClass + "\"></div>");
+            $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar').append("<div id=\"values-redactor-toolbar-" + id + "\" class=\"values-redactor-toolbar-container " + toolbarClass + "\"></div>");
         }
         $('form[name="{{ form.vars.name }}"] #' + id).redactor({
             buttons : buttons,
@@ -355,9 +355,10 @@
             minHeight: 36,
             focus: true,
             blurCallback : function(){
-                $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).addClass('hidden');
+                $('.values-redactor-toolbar-container').addClass('hidden');
             },
             focusCallback : function(){
+                $('.values-redactor-toolbar-container').addClass('hidden');
                 $('form[name="{{ form.vars.name }}"] #values-redactor-toolbar-' + id).removeClass('hidden');
             },
             plugins : ['fontcolor', 'fontfamily', 'fontsize'],
@@ -432,8 +433,7 @@
         return prototype;
     }
 
-    function setPosition{{ form.vars.id }}(prototype, type)
-    {
+    function setPosition{{ form.vars.id }}(prototype, type) {
         var data = $('form[name="{{ form.vars.name }}"] #table-data');
         switch(type){
             case 'ordered':
