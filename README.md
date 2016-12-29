@@ -45,8 +45,8 @@ You can fetch these vendors with bower:
 
 ```json
     "dependencies": {
-        "redactor": "https://github.com/hrmsautran/bower-redactor/archive/10.2.5.zip",
-        "x-editable": "~1.5.1"
+    "redactor": "https://github.com/lenybernard/bower-redactor/archive/10.2.5.zip",
+    "x-editable": "~1.5.1"
     }
 ```
 
