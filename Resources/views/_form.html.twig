@@ -372,6 +372,7 @@
      * @param elem
      */
     function moveTable{{ form.vars.id }}(direction, elem){
+        console.log('move');
         var elemToMove = $(elem).parents('.vic-table-square')[0];
         var index = 0;
         var indexToSwitch = 0;
@@ -382,7 +383,7 @@
         switch (direction) {
             case "up":
             case "down":
-                field = "input";
+                field = "textarea";
                 dataToUse = "ordered";
                 dataToBrowse ="abscissa";
                 index = $(elemToMove).data(dataToUse);
@@ -418,9 +419,12 @@
 
             var elemToSwitchField = $('form[name="{{ form.vars.name }}"] .vic-table-square.-field[data-' + dataToUse + '="' + indexToSwitch + '"]').find(field);
             var currentField = $('form[name="{{ form.vars.name }}"] .vic-table-square.-field[data-' + dataToUse + '="' + index + '"]').find(field);
-            var elemToSwitchFieldValue = elemToSwitchField.val();
-            elemToSwitchField.val(currentField.val());
-            currentField.val(elemToSwitchFieldValue);
+            var elemToSwitchFieldValue = elemToSwitchField.redactor('code.get') ;
+            console.log('replace "'+elemToSwitchField.val()+'" by "'+currentField.val()+'"');
+            console.log('replace "'+currentField.val()+'" by "'+elemToSwitchFieldValue+'"');
+
+            elemToSwitchField.redactor('code.set', currentField.redactor('code.get'));
+            currentField.redactor('code.set', elemToSwitchFieldValue);
         }
     }
 
