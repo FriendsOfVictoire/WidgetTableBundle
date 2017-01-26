@@ -420,8 +420,6 @@
             var elemToSwitchField = $('form[name="{{ form.vars.name }}"] .vic-table-square.-field[data-' + dataToUse + '="' + indexToSwitch + '"]').find(field);
             var currentField = $('form[name="{{ form.vars.name }}"] .vic-table-square.-field[data-' + dataToUse + '="' + index + '"]').find(field);
             var elemToSwitchFieldValue = elemToSwitchField.redactor('code.get') ;
-            console.log('replace "'+elemToSwitchField.val()+'" by "'+currentField.val()+'"');
-            console.log('replace "'+currentField.val()+'" by "'+elemToSwitchFieldValue+'"');
 
             elemToSwitchField.redactor('code.set', currentField.redactor('code.get'));
             currentField.redactor('code.set', elemToSwitchFieldValue);
