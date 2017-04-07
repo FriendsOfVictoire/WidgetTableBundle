@@ -69,7 +69,6 @@ class WidgetTableType extends WidgetType
             'data_class'         => 'Victoire\Widget\TableBundle\Entity\WidgetTable',
             'widget'             => 'Table',
             'translation_domain' => 'victoire',
-            'namespace'          => null,
             'businessEntityId'   => null,
             'mode'               => 'static',
         ]);
