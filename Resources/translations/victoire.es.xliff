@@ -26,7 +26,7 @@
         <source>widget.table.form.fullWidth</source>
         <target state="new">Set the table at 100% ? (advised when the width is undefined)</target>
       </trans-unit>
-      <trans-unit id="5" resname="widget.table.width.empty">
+      <trans-unit id="6" resname="widget.table.width.empty">
         <source>widget.table.width.empty</source>
         <target state="new">Width undefined</target>
       </trans-unit>

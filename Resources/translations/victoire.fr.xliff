@@ -26,7 +26,7 @@
         <source>widget.table.form.fullWidth</source>
         <target state="new">Mettre le tableau à 100% ? (conseillé lorsque les colonnes n'ont pas de largeur définie)</target>
       </trans-unit>
-      <trans-unit id="5" resname="widget.table.width.empty">
+      <trans-unit id="6" resname="widget.table.width.empty">
         <source>widget.table.width.empty</source>
         <target state="new">aucune largeur définie</target>
       </trans-unit>
