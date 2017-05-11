@@ -26,7 +26,7 @@
         <source>widget.table.form.fullWidth</source>
         <target state="new">Definir la tabla a 100%? (aconsejado cuando el ancho no está definido)</target>
       </trans-unit>
-      <trans-unit id="5" resname="widget.table.width.empty">
+      <trans-unit id="6" resname="widget.table.width.empty">
         <source>widget.table.width.empty</source>
         <target state="new">Ancho indefinido</target>
       </trans-unit>
